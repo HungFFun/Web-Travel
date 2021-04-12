@@ -1,8 +1,9 @@
 <template>
   <div>
-    <Nav></Nav>
+    <NavUser></NavUser>
     <div>
       <mdb-container>
+        <nav-page></nav-page>
         <section class="text-center mb-4">
           <h2 class="h1-responsive font-weight-bold text-center ">
             Địa điểm du lịch yêu thích
@@ -14,12 +15,24 @@
           <mdb-row>
             <mdb-col lg="3" md="6" class="mb-lg-0 mb-4">
               <mdb-card collection class="z-depth-1-half">
-                <div class="view zoom" style="height: 383px;">
+                <div class="view zoom " style="height: 383px;">
                   <img
                     src="https://travel.com.vn/Content/ThemeHe/img/dd1.jpg"
                     class="img-fluid"
                     alt=""
                   />
+                </div>
+
+                <div class="white-text text-center  halongCSS">
+                  <b>
+                    <span style="font-size: 17px;">
+                      Vịnh Hạ Long
+                    </span>
+                  </b>
+                  <br />
+                  <span>
+                    Đã có <span style="color: red">1.600*</span> lượt khách
+                  </span>
                 </div>
               </mdb-card>
             </mdb-col>
@@ -30,6 +43,17 @@
                     src="https://travel.com.vn/Content/ThemeHe/img/dd2.jpg"
                     alt=""
                   />
+                </div>
+                <div class="white-text text-center halongCSS">
+                  <b>
+                    <span style="font-size: 17px;">
+                      Sapa
+                    </span>
+                  </b>
+                  <br />
+                  <span>
+                    Đã có <span style="color: red">1.200*</span> lượt khách
+                  </span>
                 </div>
               </mdb-card>
             </mdb-col>
@@ -42,6 +66,17 @@
                     alt=""
                   />
                 </div>
+                <div class="white-text text-center halongCSS">
+                  <b>
+                    <span style="font-size: 17px;">
+                      Đà nẵng
+                    </span>
+                  </b>
+                  <br />
+                  <span>
+                    Đã có <span style="color: red">1.800*</span> lượt khách
+                  </span>
+                </div>
               </mdb-card>
             </mdb-col>
             <mdb-col lg="3" md="6" class="mb-lg-0 mb-4">
@@ -52,6 +87,17 @@
                     class="img-fluid"
                     alt=""
                   />
+                </div>
+                <div class="white-text text-center halongCSS">
+                  <b>
+                    <span style="font-size: 17px;">
+                      Quy Nhơn
+                    </span>
+                  </b>
+                  <br />
+                  <span>
+                    Đã có <span style="color: red">1.900*</span> lượt khách
+                  </span>
                 </div>
               </mdb-card>
             </mdb-col>
@@ -66,9 +112,20 @@
                         <mdb-card-image
                           src="https://travel.com.vn/Content/ThemeHe/img/qg1.jpg"
                           alt="Image"
-                          class="rounded-0"
+                          class="rounded-0 rgba-black-strong"
                         >
                         </mdb-card-image>
+                        <div class="white-text text-center chauAuCSS">
+                          <b>
+                            <span style="font-size: 17px; ">
+                              Châu âu
+                            </span>
+                          </b>
+                          <br />
+                          <span style="margin-left: 110px;color:orange">
+                            Khám phá ngay
+                          </span>
+                        </div>
                       </mdb-col>
                     </mdb-row>
                   </mdb-card>
@@ -83,6 +140,17 @@
                           class="rounded-0"
                         >
                         </mdb-card-image>
+                        <div class="white-text text-center chauAuCSS">
+                          <b>
+                            <span style="font-size: 17px; ">
+                              Châu Á
+                            </span>
+                          </b>
+                          <br />
+                          <span style="margin-left: 110px;color:orange">
+                            Khám phá ngay
+                          </span>
+                        </div>
                       </mdb-col>
                     </mdb-row>
                   </mdb-card>
@@ -97,6 +165,17 @@
                           class="rounded-0"
                         >
                         </mdb-card-image>
+                        <div class="white-text text-center chauAuCSS">
+                          <b>
+                            <span style="font-size: 17px; ">
+                              Châu Úc
+                            </span>
+                          </b>
+                          <br />
+                          <span style="margin-left: 110px;color:orange">
+                            Khám phá ngay
+                          </span>
+                        </div>
                       </mdb-col>
                     </mdb-row>
                   </mdb-card>
@@ -111,6 +190,17 @@
                           class="rounded-0"
                         >
                         </mdb-card-image>
+                        <div class="white-text text-center chauAuCSS">
+                          <b>
+                            <span style="font-size: 17px; ">
+                              Châu Mỹ
+                            </span>
+                          </b>
+                          <br />
+                          <span style="margin-left: 110px;color:orange">
+                            Khám phá ngay
+                          </span>
+                        </div>
                       </mdb-col>
                     </mdb-row>
                   </mdb-card>
@@ -125,6 +215,17 @@
                           class="rounded-0"
                         >
                         </mdb-card-image>
+                        <div class="white-text text-center chauAuCSS">
+                          <b>
+                            <span style="font-size: 17px; ">
+                              Châu phi
+                            </span>
+                          </b>
+                          <br />
+                          <span style="margin-left: 110px;color:orange">
+                            Khám phá ngay
+                          </span>
+                        </div>
                       </mdb-col>
                     </mdb-row>
                   </mdb-card>
@@ -157,7 +258,6 @@
           <mdb-btn color="primary">Xem thêm</mdb-btn>
         </mdb-col>
       </mdb-row>
-
       <mdb-row class="mr-0 mt-5">
         <mdb-col col="12" class="pr-0">
           <template>
@@ -279,12 +379,13 @@ import { mdbCarousel } from 'mdbvue';
 import { mdbRow, mdbCol, mdbCard, mdbCardImage } from 'mdbvue';
 
 import FooterB from '../components/FooterB.vue';
-import Nav from '../components/NavB.vue';
+import NavUser from '../components/NavUser.vue';
 import CardsTour from '../components/Cards-tour.vue';
 import CardsProduct from '../components/cards-product.vue';
+import NavPage from '../components/NavPage.vue';
 export default {
   components: {
-    Nav,
+    NavUser,
     FooterB,
     mdbCarousel,
     mdbRow,
@@ -293,7 +394,9 @@ export default {
     mdbCardImage,
     CardsTour,
     CardsProduct,
+    NavPage,
   },
+
   data() {
     return {
       items: [
@@ -346,6 +449,17 @@ export default {
 .why {
   margin-top: -16rem;
   margin-left: 4rem;
+  position: absolute;
+}
+.halongCSS {
+  margin-top: 20rem;
+  margin-left: 44px;
+  position: absolute;
+  font-size: 15px;
+}
+.chauAuCSS {
+  margin-top: -4rem;
+  margin-left: -75px;
   position: absolute;
 }
 b {

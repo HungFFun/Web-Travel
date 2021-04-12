@@ -2,57 +2,59 @@
   <mdb-card-group deck>
     <template v-for="(img, i) in basic.slice(0, 3)">
       <mdb-card :key="i">
-        <mdb-card-image :src="img" alt="Card image cap"></mdb-card-image>
-        <mdb-card-body class="pb-0">
-          <mdb-card-title> Bay cùng Vietravel {{ i + 1 }} </mdb-card-title>
-          <mdb-card-text>
-            <hr />
-            <mdb-row>
-              <mdb-col col="2">
-                <mdb-icon icon="map-marked-alt"> </mdb-icon>
-              </mdb-col>
-              <mdb-col col="4" class="pl-0">
-                <span> Nơi khởi hành:</span>
-              </mdb-col>
-              <mdb-col col="6" class="pl-0">
-                <span> Hồ chí minh </span>
-              </mdb-col>
-            </mdb-row>
+        <router-link to="/detail-tour">
+          <mdb-card-image :src="img" alt="Card image cap"></mdb-card-image>
+          <mdb-card-body class="pb-0">
+            <mdb-card-title> Bay cùng Vietravel {{ i + 1 }} </mdb-card-title>
+            <mdb-card-text>
+              <hr />
+              <mdb-row>
+                <mdb-col col="2">
+                  <mdb-icon icon="map-marked-alt"> </mdb-icon>
+                </mdb-col>
+                <mdb-col col="4" class="pl-0">
+                  <span> Nơi khởi hành:</span>
+                </mdb-col>
+                <mdb-col col="6" class="pl-0">
+                  <span> Hồ chí minh </span>
+                </mdb-col>
+              </mdb-row>
 
-            <mdb-row>
-              <mdb-col col="2">
-                <mdb-icon icon="hiking"> </mdb-icon>
-              </mdb-col>
-              <mdb-col col="4" class="pl-0">
-                <span> Số vé:</span>
-              </mdb-col>
-              <mdb-col col="6" class="pl-0">
-                <span> 6 vé </span>
-              </mdb-col>
-            </mdb-row>
+              <mdb-row>
+                <mdb-col col="2">
+                  <mdb-icon icon="hiking"> </mdb-icon>
+                </mdb-col>
+                <mdb-col col="4" class="pl-0">
+                  <span> Số vé:</span>
+                </mdb-col>
+                <mdb-col col="6" class="pl-0">
+                  <span> 6 vé </span>
+                </mdb-col>
+              </mdb-row>
 
-            <mdb-row class="mb-1">
-              <mdb-col col="2">
-                <mdb-icon icon="calendar-alt"> </mdb-icon>
-              </mdb-col>
-              <mdb-col col="4" class="pl-0">
-                <span> 16/4/1999:</span>
-              </mdb-col>
-              <mdb-col col="6" class="pl-0">
-                <span> 3 ngày </span>
-              </mdb-col>
-            </mdb-row>
+              <mdb-row class="mb-1">
+                <mdb-col col="2">
+                  <mdb-icon icon="calendar-alt"> </mdb-icon>
+                </mdb-col>
+                <mdb-col col="4" class="pl-0">
+                  <span> 16/4/1999:</span>
+                </mdb-col>
+                <mdb-col col="6" class="pl-0">
+                  <span> 3 ngày </span>
+                </mdb-col>
+              </mdb-row>
 
-            <mdb-row class="">
-              <mdb-col col="12">
-                <mdb-rating v-model="value" />
-              </mdb-col>
-            </mdb-row>
-          </mdb-card-text>
-          <div class="price" style="width: 12rem;">
-            <p class="card-price">1250 р.</p>
-          </div>
-        </mdb-card-body>
+              <mdb-row class="">
+                <mdb-col col="12">
+                  <mdb-rating v-model="value" />
+                </mdb-col>
+              </mdb-row>
+            </mdb-card-text>
+            <div class="price" style="width: 12rem;">
+              <p class="card-price">1250 р.</p>
+            </div>
+          </mdb-card-body>
+        </router-link>
       </mdb-card>
     </template>
   </mdb-card-group>
@@ -87,19 +89,6 @@ export default {
 };
 </script>
 <style>
-.yellow-text-dark-2 {
-  color: #d7c952 !important;
-}
-.yellow-text-dark-3 {
-  color: #9b9247 !important;
-}
-.yellow-text-dark-4 {
-  color: #827c47 !important;
-}
-.yellow-text-dark-1 {
-  color: #e9d947 !important;
-}
-
 .price {
   margin-top: -212px;
   margin-left: -39px;

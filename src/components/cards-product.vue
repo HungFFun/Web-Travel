@@ -2,15 +2,13 @@
   <mdb-card-group deck>
     <template v-for="(img, i) in basic.slice(0, 5)">
       <mdb-card :key="i" cascade narrow ecommerce>
-        <mdb-view overlay="white-slight" cascade>
-          <mdb-card-image
-            src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/1.jpg"
-            waves
-            top
-            alt="sample photo"
-          />
-        </mdb-view>
-        <mdb-card-body class="text-center" cascade>
+        <mdb-card-image
+          src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/1.jpg"
+          alt="Card image cap"
+          class="imgProduct"
+          style="width: 290px;height:300px; border-radius: 2%;"
+        ></mdb-card-image>
+        <mdb-card-body class="text-center" cascade style="margin-top: 17rem;">
           <a href="" class="grey-text">
             <h5>Denim</h5>
           </a>
@@ -19,23 +17,7 @@
               <a href="">Denim trousers</a>
             </strong>
           </mdb-card-title>
-          <ul class="rating">
-            <li>
-              <mdb-icon icon="star"></mdb-icon>
-            </li>
-            <li>
-              <mdb-icon icon="star"></mdb-icon>
-            </li>
-            <li>
-              <mdb-icon icon="star"></mdb-icon>
-            </li>
-            <li>
-              <mdb-icon icon="star"></mdb-icon>
-            </li>
-            <li>
-              <mdb-icon far icon="star"></mdb-icon>
-            </li>
-          </ul>
+
           <mdb-card-text
             >Neque porro quisquam est, qui dolorem ipsum quia dolor
             sit.</mdb-card-text
@@ -92,30 +74,38 @@
     </template>
   </mdb-card-group>
 </template>
+
 <script>
-import {
-  mdbCard,
-  mdbCardImage,
-  mdbCardBody,
-  mdbCardTitle,
-  mdbCardFooter,
-  mdbCardText,
-  mdbIcon,
-  mdbTooltip,
-  mdbView,
-} from 'mdbvue';
+import { mdbCard, mdbCardText, mdbCardBody } from 'mdbvue';
 export default {
-  name: 'EcommercePage',
+  name: 'CarouselPage',
   components: {
     mdbCard,
-    mdbCardImage,
-    mdbCardBody,
-    mdbCardTitle,
-    mdbCardFooter,
     mdbCardText,
-    mdbIcon,
-    mdbTooltip,
-    mdbView,
+    mdbCardBody,
+  },
+  data() {
+    return {
+      basic: [
+        'https://mdbootstrap.com/img/Photos/Others/img (36).jpg',
+        'https://mdbootstrap.com/img/Photos/Others/img (34).jpg',
+        'https://mdbootstrap.com/img/Photos/Others/img (38).jpg',
+        'https://mdbootstrap.com/img/Photos/Others/img (29).jpg',
+        'https://mdbootstrap.com/img/Photos/Others/img (30).jpg',
+        'https://mdbootstrap.com/img/Photos/Others/img (27).jpg',
+        'https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(53).jpg',
+        'https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(45).jpg',
+        'https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(51).jpg',
+      ],
+    };
   },
 };
 </script>
+<style>
+.imgProduct {
+  margin-top: -17px;
+  margin-left: 15px;
+  position: absolute;
+}
+</style>
+  

@@ -1,5 +1,4 @@
-]
-zx<template>
+<template>
   <!-- Footer -->
 
   <mdb-footer color="" class="font-small background_color pt-4 mt-4">
