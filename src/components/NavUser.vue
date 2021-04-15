@@ -7,7 +7,9 @@
       <mdb-navbar-toggler>
         <mdb-navbar-nav right>
           <mdb-nav-item href="#" waves-fixed>
-            <span style="color:black">Home</span>
+            <router-link to="/">
+              <span style="color:black">Home</span>
+            </router-link>
           </mdb-nav-item>
           <mdb-nav-item href="#" waves-fixed>
             <span style="color:black">Features</span>

@@ -89,7 +89,12 @@
           <hr />
           <mdb-row class="mt-2">
             <mdb-col col="12">
-              <mdb-btn color="danger" style="width: 326px;" icon="cart-plus">
+              <mdb-btn
+                color="danger"
+                style="width: 326px;"
+                icon="cart-plus"
+                @click="bookTour()"
+              >
                 Đặt ngay</mdb-btn
               >
             </mdb-col>
@@ -115,38 +120,58 @@
               <mdb-row>
                 <mdb-col col="12" style="background-color: #f1f1f1;">
                   <mdb-navbar-nav nav vertical>
-                    <mdb-nav-item href="#" icon="spinner">
-                      <span class="ml-3">Chương trình tour</span>
+                    <mdb-nav-item href="#" icon="spinner" class="mt-3">
+                      <span class="ml-3 mt-3" style="color: black;">
+                        Chương trình tour
+                      </span>
                     </mdb-nav-item>
-                    <mdb-nav-item href="#" icon="list-ul">
-                      <span class="ml-3">Chi tiết tour</span>
+                    <mdb-nav-item href="#" icon="list-ul" class="mt-2">
+                      <span class="ml-3" style="color: black;">
+                        Chi tiết tour
+                      </span>
                     </mdb-nav-item>
-                    <mdb-nav-item href="#" icon="exclamation-triangle">
-                      <span class="ml-3">Lưu ý</span>
+                    <mdb-nav-item
+                      href="#"
+                      icon="exclamation-triangle"
+                      class="mt-2"
+                    >
+                      <span class="ml-3" style="color: black;"> Lưu ý </span>
                     </mdb-nav-item>
-                    <mdb-nav-item href="#" icon="comments">
-                      <span class="ml-3">ý kiến khách hàng</span>
+                    <mdb-nav-item href="#" icon="comments" class="mt-2">
+                      <span class="ml-3" style="color: black;">
+                        ý kiến khách hàng
+                      </span>
                     </mdb-nav-item>
-                    <mdb-nav-item href="#" icon="headset">
-                      <span class="ml-3">Liên hệ</span>
+                    <mdb-nav-item href="#" icon="headset" class="mt-2 mb-3">
+                      <span class="ml-3" style="color: black;"> Liên hệ </span>
                     </mdb-nav-item>
                   </mdb-navbar-nav>
                 </mdb-col>
               </mdb-row>
               <mdb-row style="background-color: #f1f1f1 ;" class="mt-3">
                 <mdb-col col="12">
-                  <mdb-row class="mt-1 mb-1">
-                    <mdb-col col="12" style="background-color: #e1e1e1;">
-                      DỊCH VỤ ĐI KÈM
+                  <mdb-row class=" mb-1">
+                    <mdb-col
+                      col="12"
+                      style="background-color: #e1e1e1; height: 63px;"
+                      class=""
+                    >
+                      <br />
+                      <span class="font-weight-bold">
+                        DỊCH VỤ ĐI KÈM
+                      </span>
+                      <br />
                     </mdb-col>
                   </mdb-row>
 
-                  <ul>
-                    <li>Bữa ăn theo chương trình</li>
-                    <li>Bảo hiểm</li>
-                    <li>Hướng dẫn viên</li>
-                    <li>Vé tham quan</li>
-                    <li>Vận chuyển</li>
+                  <ul style="margin-left: -16px;">
+                    <li class="mt-3 mb-2 text-monospace">
+                      Bữa ăn theo chương trình
+                    </li>
+                    <li class="mt-3 mb-2 text-monospace">Bảo hiểm</li>
+                    <li class="mt-3 mb-2 text-monospace">Hướng dẫn viên</li>
+                    <li class="mt-3 mb-2 text-monospace">Vé tham quan</li>
+                    <li class="mt-3 mb-2 text-monospace">Vận chuyển</li>
                   </ul>
                 </mdb-col>
               </mdb-row>
@@ -304,6 +329,12 @@ export default {
         },
       ],
     };
+  },
+  mounted() {},
+  methods: {
+    bookTour() {
+      this.$router.push({ name: 'BookTour' });
+    },
   },
 };
 </script>

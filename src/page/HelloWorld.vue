@@ -255,7 +255,7 @@
 
       <mdb-row class="mr-0 mt-5">
         <mdb-col col="12" class="pr-0 text-center">
-          <mdb-btn color="primary">Xem thêm</mdb-btn>
+          <mdb-btn color="primary" @click="listTour()">Xem thêm</mdb-btn>
         </mdb-col>
       </mdb-row>
       <mdb-row class="mr-0 mt-5">
@@ -265,6 +265,7 @@
               :items="items"
               :interval="2000"
               controlls
+              class="view-custom"
             ></mdb-carousel>
           </template>
         </mdb-col>
@@ -293,7 +294,7 @@
         style="height: 23rem;background: #f1f1f1;"
       >
         <mdb-col col="5" class=" pr-0">
-          <div class=" example z-depth-1 dot">
+          <div class=" example z-depth-1 whyChange">
             <img
               class="img"
               src="https://travel.com.vn/Content/ThemeHe/img/bg-why.png"
@@ -417,20 +418,29 @@ export default {
       ],
     };
   },
+  mounted() {},
+  methods: {
+    listTour() {
+      this.$router.push({ name: 'ListTour' });
+    },
+  },
 };
 </script>
 <style>
-.view {
-  height: 500px;
-}
 .w-100 {
   height: 500px;
 }
-.dot {
+
+.view-custom {
+  height: 22rem !important;
+}
+.view-custom img {
+  height: 22rem !important;
+}
+.whyChange {
   width: 20rem;
   height: 25rem;
   background-color: #f1f1f1;
-  /* background-image: url(https://travel.com.vn/Content/ThemeHe/img/bg-why.png); */
   border-radius: 5px;
   margin-top: -1rem;
   margin-left: 23rem;
@@ -441,10 +451,12 @@ export default {
   width: 22rem;
   height: 26rem;
 }
-.rounded,
+/* .rounded,
 .dot {
+  margin-top: -1rem;
+  margin-left: 15rem;
   position: absolute;
-}
+} */
 
 .why {
   margin-top: -16rem;
