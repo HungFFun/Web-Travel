@@ -15,12 +15,12 @@ export default new Router({
       component: HelloWorld,
     },
     {
-      path: '/detail-tour',
+      path: '/detail-tour/:id',
       name: 'TourDetail',
       component: TourDetail,
     },
     {
-      path: '/book_tour',
+      path: '/book-tour/:id',
       name: 'BookTour',
       component: BookTour,
     },

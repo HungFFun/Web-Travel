@@ -6,26 +6,14 @@
       <nav-page></nav-page>
       <template>
         <ul class="progressbar">
-          <li class="active">Step 1</li>
-          <li>Step 2</li>
-          <li>Step 3</li>
-          <li>Step 4</li>
-          <li>Step 5</li>
+          <li class="active">Thông tin liên lạc</li>
+          <li>Gợi ý sản phẩm</li>
+          <li>XÁC NHẬN BOOKING</li>
+          <li>Thanh toán</li>
         </ul>
       </template>
       <!-- thông tin tour -->
-      <div>
-        <mdb-row>
-          <mdb-col cols="12" class="pl-0">
-            <p class="tour-name">
-              Bay cùng Banda Fly Airlines: Sapa - Fansipan - Lào Cai - Hà Nội -
-              Yên Tử - Hạ Long (Tặng vé tàu hỏa Mường Hoa, khách sạn 4 sao tại
-              Hạ Long)
-            </p>
-            <mdb-icon icon="barcode" class="mr-1 mb-1" />
-            <span class="tour-code">NDSGN136-001-130421VU-V-1</span>
-          </mdb-col>
-        </mdb-row>
+      <div class="mt-5">
         <mdb-row style="background-color: #f1f1f1;">
           <mdb-col col="5" class="pl-0">
             <template>
@@ -44,12 +32,10 @@
                 <mdb-row>
                   <mdb-col col="12">
                     <p class="tour-name">
-                      Bay cùng Banda Fly Airlines: Sapa - Fansipan - Lào Cai -
-                      Hà Nội - Yên Tử - Hạ Long (Tặng vé tàu hỏa Mường Hoa,
-                      khách sạn 4 sao tại Hạ Long)
+                      {{ tour.tourName }}
                     </p>
                     <mdb-icon icon="barcode" class="mr-1 mb-1" />
-                    <span class="tour-code">NDSGN136-001-130421VU-V-1</span>
+                    <span class="tour-code"> {{ tour.tourId }} </span>
                   </mdb-col>
                 </mdb-row>
               </mdb-col>
@@ -62,9 +48,15 @@
                 <span class="font-weight-bold">Nơi khởi hành:</span>
               </mdb-col>
               <mdb-col col="6" class="pl-0">
-                <span class="text-monospace">16/04/2021</span> <br />
-                <span class="text-monospace">6 Ngày</span> <br />
-                <span class="text-monospace">Hồ Chí Minh</span>
+                <span class="text-monospace">
+                  {{ formatDate(tour.startDate) }}
+                </span>
+                <br />
+                <span class="text-monospace">
+                  {{ tour.numberOfDays }} Ngày</span
+                >
+                <br />
+                <span class="text-monospace"> {{ tour.startPlace }} </span>
               </mdb-col>
             </mdb-row>
             <hr />
@@ -75,8 +67,13 @@
                 <span class="font-weight-bold">Số vé còn:</span>
               </mdb-col>
               <mdb-col col="6" class="pl-0">
-                <span class="tour-name">6.000.000 đ</span> <br />
-                <span class="text-monospace"> 9 </span>
+                <span class="tour-name">
+                  {{ formatMoney(tour.priceDetail.adult) }}
+                </span>
+                <br />
+                <span class="text-monospace">
+                  {{ tour.numberOfParticipants }}
+                </span>
               </mdb-col>
             </mdb-row>
             <hr />
@@ -98,7 +95,7 @@
             <th>#</th>
             <th>Người lớn (Từ 12 tuổi trở lên)</th>
             <th>Trẻ em (Từ 5 tuổi đến dưới 12 tuổi)</th>
-            <th>Em bé (Dưới 2 tuổi)</th>
+            <th>Em bé (Dưới 5 tuổi)</th>
             <th>Phụ thu phòng đơn</th>
           </tr>
         </mdb-tbl-head>
@@ -106,10 +103,10 @@
         <mdb-tbl-body>
           <tr>
             <th>1</th>
-            <td>3,390,000 đ</td>
-            <td>3,390,000 đ</td>
-            <td>3,390,000 đ</td>
-            <td>1,200,000 đ</td>
+            <td>{{ formatMoney(tour.priceDetail.adult) }}</td>
+            <td>{{ formatMoney(tour.priceDetail.underTheAgeOfTwelve) }}</td>
+            <td>{{ formatMoney(tour.priceDetail.underTheAgeOfFive) }}</td>
+            <td>{{ formatMoney(surcharge) }}</td>
           </tr>
         </mdb-tbl-body>
       </mdb-tbl>
@@ -125,24 +122,30 @@
       <div>
         <mdb-row class="mt-3">
           <mdb-col cols="6">
-            <div class="form-group">
-              <label for="example1">Họ tên (*)</label>
+            <div class="form-group font-weight-bold">
+              <label for="example1"
+                >Họ tên (<span style="color:red">*</span>)</label
+              >
               <input
                 type="text"
                 id="example1"
                 class="form-control form-control-lg"
               />
             </div>
-            <div class="form-group">
-              <label for="example1">Large input</label>
+            <div class="form-group font-weight-bold">
+              <label for="example1">
+                Di động (<span style="color:red">*</span>)
+              </label>
               <input
                 type="text"
                 id="example1"
                 class="form-control form-control-lg"
               />
             </div>
-            <div class="form-group">
-              <label for="example1">Large input</label>
+            <div class="form-group font-weight-bold">
+              <label for="example1">
+                Địa chỉ (<span style="color:red">*</span>)
+              </label>
               <input
                 type="text"
                 id="example1"
@@ -151,16 +154,19 @@
             </div>
           </mdb-col>
           <mdb-col cols="6">
-            <div class="form-group">
-              <label for="example1">Large input</label>
+            <div class="form-group font-weight-bold">
+              <label for="example1"
+                >Email (<span style="color:red">*</span>)</label
+              >
               <input
                 type="text"
                 id="example1"
                 class="form-control form-control-lg"
+                @mouseleave="totalOfPeople()"
               />
             </div>
-            <div class="form-group">
-              <label for="example1">Large input</label>
+            <div class="form-group font-weight-bold">
+              <label for="example1">Điện thoại </label>
               <input
                 type="text"
                 id="example1"
@@ -168,70 +174,89 @@
               />
             </div>
             <mdb-row>
-              <mdb-col cols="2" class="pl-0 ">
-                <div class="form-group">
-                  <label for="example1">Large input</label>
+              <mdb-col cols="2">
+                <div class="form-group font-weight-bold">
+                  <label for="example1"> Người lớn</label>
                   <input
-                    type="text"
+                    type="number"
+                    min="1"
                     id="example1"
                     class="form-control form-control-lg"
+                    v-model="numberAdults"
                   />
                 </div>
               </mdb-col>
               <mdb-col cols="2" class="pl-0 ">
-                <div class="form-group">
-                  <label for="example1">Large input</label>
+                <div class="form-group font-weight-bold">
+                  <label for="example1"> Trẻ em </label>
                   <input
-                    type="text"
+                    type="number"
                     id="example1"
                     class="form-control form-control-lg"
+                    min="0"
+                    v-model="numberChildren"
+                    @mouseleave="totalOfPeople()"
                   />
                 </div>
               </mdb-col>
               <mdb-col cols="2" class="pl-0 ">
-                <div class="form-group">
-                  <label for="example1">Large input</label>
+                <div class="form-group font-weight-bold">
+                  <label for="example1"> Em bé </label>
                   <input
-                    type="text"
+                    type="number"
                     id="example1"
                     class="form-control form-control-lg"
+                    min="0"
+                    v-model="numberYoung"
+                    @mouseleave="totalOfPeople()"
                   />
                 </div>
               </mdb-col>
+
               <mdb-col cols="2" class="pl-0 ">
-                <div class="form-group">
-                  <label for="example1">Large input</label>
+                <div class="form-group font-weight-bold">
+                  <label for="example1">Số khách</label>
                   <input
-                    type="text"
+                    type="number"
                     id="example1"
                     class="form-control form-control-lg"
-                  />
-                </div>
-              </mdb-col>
-              <mdb-col cols="2" class="pl-0 ">
-                <div class="form-group">
-                  <label for="example1">Large input</label>
-                  <input
-                    type="text"
-                    id="example1"
-                    class="form-control form-control-lg"
+                    v-model="total"
+                    readonly
                   />
                 </div>
               </mdb-col>
             </mdb-row>
           </mdb-col>
         </mdb-row>
+
+        <!-- quy định tính tuổi  -->
         <mdb-row
           style="background-color: #f1f1f1;"
           class="mt-4 border-left border-danger border-left-custom "
         >
           <mdb-col cols="6">
-            <p class="mt-4">Người lớn sinh từ: 20/04/1951 đến 20/04/2009</p>
-            <p>Trẻ nhỏ sinh từ: 21/04/2016 đến 20/04/2019</p>
+            <p class="mt-4 text-monospace">
+              Người lớn sinh từ:
+              <span class="font-weight-bold">20/04/1951</span> đến
+              <span class="font-weight-bold">20/04/2009</span>
+            </p>
+            <p class="mt-4 text-monospace">
+              Trẻ nhỏ sinh từ:
+              <span class="font-weight-bold">21/04/2016</span> đến
+              <span class="font-weight-bold">20/04/2019</span>
+            </p>
           </mdb-col>
           <mdb-col cols="6">
-            <p class="mt-4">Trẻ em sinh từ: 21/04/2009 đến 20/04/2016</p>
-            <p>Em bé sinh từ: 21/04/2019 đến 14/04/2021</p>
+            <p class="mt-4 text-monospace">
+              Trẻ em sinh từ:
+              <span class="font-weight-bold"> 21/04/2009</span> đến
+              <span class="font-weight-bold">20/04/2016</span>
+            </p>
+            <p class="text-monospace">
+              Em bé sinh từ:
+              <span class="font-weight-bold">21/04/2019</span> đến
+              <span class="font-weight-bold">14/04/2021</span>
+            </p>
           </mdb-col>
         </mdb-row>
       </div>
@@ -244,15 +269,19 @@
       </mdb-row>
       <div>
         <mdb-tbl bordered>
-          <mdb-tbl bordered v-for="i in 4" :key="i">
+          <!--Số người lớn  -->
+          <div></div>
+          <mdb-tbl bordered v-for="i in parseInt(numberAdults)" :key="i">
             <tr style="background-color: #f1f1f1;">
-              <td>Khách hàng</td>
+              <td class="font-weight-bold">Người lớn {{ i }}</td>
             </tr>
             <tr style="height:4rem">
               <mdb-row>
                 <mdb-col class="ml-2">
-                  <div class="form-group">
-                    <label for="example1">Họ tên (*)</label>
+                  <div class="form-group font-weight-bold">
+                    <label for="example1">
+                      Họ tên (<span style="color:red">*</span>)
+                    </label>
                     <input
                       type="text"
                       id="example1"
@@ -261,8 +290,10 @@
                   </div>
                 </mdb-col>
                 <mdb-col>
-                  <div class="form-group">
-                    <label for="example1">Họ tên (*)</label>
+                  <div class="form-group font-weight-bold">
+                    <label for="example1">
+                      Ngày sinh (<span style="color:red">*</span>)
+                    </label>
                     <input
                       type="date"
                       id="example1"
@@ -271,26 +302,186 @@
                   </div>
                 </mdb-col>
                 <mdb-col class="mr-2">
-                  <div class="form-group">
-                    <label for="example1">Phòng đơn (*)</label>
-                    <select class="browser-default custom-select">
-                      <option selected value="1">Không</option>
-                      <option value="2">Có</option>
+                  <div class="form-group font-weight-bold">
+                    <label for="example1 ">
+                      Giới tính (<span style="color:red">*</span>)
+                    </label>
+                    <select
+                      class="browser-default custom-select"
+                      style="height:48px"
+                    >
+                      <option selected value="1">Nam</option>
+                      <option value="2">Nữa</option>
                     </select>
+                  </div>
+                </mdb-col>
+              </mdb-row>
+            </tr>
+
+            <tr>
+              <td class="text-right">
+                <span class="font-weight-bold" style="color: red">
+                  {{ formatMoney(tour.priceDetail.adult) }}
+                </span>
+              </td>
+            </tr>
+          </mdb-tbl>
+
+          <!--Số trẻ em  -->
+          <div v-if="numberChildren >= 1">
+            <mdb-tbl bordered v-for="i in parseInt(numberChildren)" :key="i">
+              <tr style="background-color: #f1f1f1;">
+                <td class="font-weight-bold">Trẻ em {{ i }}</td>
+              </tr>
+              <tr style="height:4rem">
+                <mdb-row>
+                  <mdb-col class="ml-2">
+                    <div class="form-group font-weight-bold">
+                      <label for="example1"
+                        >Họ tên (<span style="color:red">*</span>)</label
+                      >
+                      <input
+                        type="text"
+                        id="example1"
+                        class="form-control form-control-lg"
+                      />
+                    </div>
+                  </mdb-col>
+                  <mdb-col>
+                    <div class="form-group font-weight-bold">
+                      <label for="example1">
+                        Họ tên (<span style="color:red">*</span>)
+                      </label>
+                      <input
+                        type="date"
+                        id="example1"
+                        class="form-control form-control-lg"
+                      />
+                    </div>
+                  </mdb-col>
+                  <mdb-col class="mr-2">
+                    <div class="form-group font-weight-bold">
+                      <label for="example1 ">
+                        Giới tính (<span style="color:red">*</span>)
+                      </label>
+                      <select
+                        class="browser-default custom-select"
+                        style="height:48px"
+                      >
+                        <option selected value="1">Nam</option>
+                        <option value="2">Nữa</option>
+                      </select>
+                    </div>
+                  </mdb-col>
+                </mdb-row>
+              </tr>
+              <tr>
+                <td class="text-right">
+                  <span class="font-weight-bold" style="color: red">
+                    {{ formatMoney(tour.priceDetail.underTheAgeOfTwelve) }}
+                  </span>
+                </td>
+              </tr>
+            </mdb-tbl>
+          </div>
+
+          <!-- Số em bé  -->
+          <div v-if="numberYoung >= 1">
+            <mdb-tbl bordered v-for="i in parseInt(numberYoung)" :key="i">
+              <tr style="background-color: #f1f1f1;">
+                <td class="font-weight-bold">Em bé {{ i }}</td>
+              </tr>
+              <tr style="height:4rem">
+                <mdb-row>
+                  <mdb-col class="ml-2">
+                    <div class="form-group font-weight-bold">
+                      <label for="example1">
+                        Họ tên (<span style="color:red">*</span>)
+                      </label>
+                      <input
+                        type="text"
+                        id="example1"
+                        class="form-control form-control-lg"
+                      />
+                    </div>
+                  </mdb-col>
+                  <mdb-col>
+                    <div class="form-group font-weight-bold">
+                      <label for="example1">
+                        Họ tên (<span style="color:red">*</span>)
+                      </label>
+                      <input
+                        type="date"
+                        id="example1"
+                        class="form-control form-control-lg"
+                      />
+                    </div>
+                  </mdb-col>
+                  <mdb-col class="mr-2">
+                    <div class="form-group font-weight-bold">
+                      <label for="example1 ">
+                        Giới tính (<span style="color:red">*</span>)
+                      </label>
+                      <select
+                        class="browser-default custom-select"
+                        style="height:48px"
+                      >
+                        <option selected value="1">Nam</option>
+                        <option value="2">Nữa</option>
+                      </select>
+                    </div>
+                  </mdb-col>
+                </mdb-row>
+              </tr>
+              <tr>
+                <td class="text-right">
+                  <span class="font-weight-bold" style="color: red">
+                    {{ formatMoney(tour.priceDetail.underTheAgeOfFive) }}
+                  </span>
+                </td>
+              </tr>
+            </mdb-tbl>
+          </div>
+
+          <!-- Phụ thu  -->
+          <mdb-tbl bordered>
+            <tr style="background-color: #f1f1f1;">
+              <td class="font-weight-bold">Thuê thêm Phòng đơn</td>
+            </tr>
+            <tr style="height:4rem">
+              <mdb-row>
+                <mdb-col class="ml-2">
+                  <div class="form-group font-weight-bold">
+                    <label for="example1">
+                      Số phòng (<span style="color:red">*</span>)
+                    </label>
+                    <input
+                      type="number"
+                      id="example1"
+                      class="form-control form-control-lg text-center"
+                      min="0"
+                      v-model="numberClass"
+                      @mouseleave="totalOfPeople()"
+                    />
                   </div>
                 </mdb-col>
               </mdb-row>
             </tr>
             <tr>
               <td class="text-right">
-                Trị giá: 9,090,000 đ
+                <span class="font-weight-bold" style="color: red">
+                  {{ formatMoney(moneyClass) }}
+                </span>
               </td>
             </tr>
           </mdb-tbl>
 
+          <!-- Tổng tiền phải thanh toán  -->
           <tr>
             <td class="text-right">
-              Tổng cộng: 9,090,000 đ
+              <span class="font-weight-bold" style="color: red">
+                Tổng tiền: {{ formatMoney(totalMoney) }}
+              </span>
             </td>
           </tr>
         </mdb-tbl>
@@ -345,12 +536,73 @@
             </label>
           </div>
           <div v-if="gender === '2'">
-            <p class="ml-4 mt-2">
-              Quý khách vui lòng thanh toán tại bất kỳ văn phòng Banda Fly trên
-              toàn quốc và các chi nhánh ngoài nước. Chi tiết Xin lưu ý, Quý
-              khách nên liên lạc trước khi đến để biết rõ hơn về giờ làm việc và
-              các hồ sơ cần chuẩn bị khi thanh toán.
-            </p>
+            <table
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              width="100%"
+              class="ml-4 mt-2"
+            >
+              <tbody>
+                <tr>
+                  <td style="color:#fc3400;">
+                    <strong>PHƯƠNG THỨC THANH TOÁN CHUYỂN KHOẢN :</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p style="margin-left: 10px">
+                      - Banda Fly chấp nhận thanh toán chuyển khoản từ ATM /
+                      Internet Banking / Quầy giao dịch khách hàng
+                    </p>
+                    <p style="margin-left: 10px">
+                      - Quý khách sau khi thực hiện việc chuyển khoản vui lòng
+                      gửi email đến
+                      <a href="#"> bandaFly@gmail.com </a>
+                      hoặc gọi tổng đài 1900.1839 để được xác nhận từ công ty
+                      chúng tôi.
+                    </p>
+                    <p style="margin-left: 10px">
+                      - Banda Fly xin gửi thông tin chuyển khoản như bên dưới để
+                      Quý khách thanh toán trước thời hạn ghi trên Thông tin đặt
+                      tour. Sau thời gian trên nếu Quý khách không chuyển khoản
+                      thanh toán, booking sẽ tự động huỷ ra.
+                    </p>
+                    <p style="margin-left: 10px">
+                      - Banda Fly sẽ không giải quyết các trường hợp booking tự
+                      động hủy nếu quý khách không thực hiện đúng các hướng dẫn
+                      trên.
+                    </p>
+                    <p style="margin-left: 10px">
+                      <span style="color:#c00000;"
+                        >Tên Tài Khoản :
+                        <strong
+                          >Công ty CP Du lịch và Tiếp thị GTVT Việt Nam – Banda
+                          Fly</strong
+                        ></span
+                      >
+                    </p>
+                    <p style="margin-left: 10px">
+                      <span style="color:#c00000;"
+                        >Tên tài khoản viết tắt :
+                        <strong>Banda Fly</strong></span
+                      >
+                    </p>
+                    <p style="margin-left: 10px">
+                      <span style="color:#c00000;"
+                        >Số Tài khoản : <strong>007 100 115 1480</strong></span
+                      >
+                    </p>
+                    <p style="margin-left: 10px">
+                      <span style="color:#c00000;"
+                        >Ngân hàng :
+                        <strong>Vietcombank – CN Tp.HCM</strong></span
+                      >
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
           <!-- Group of default radios - option 3 -->
@@ -368,12 +620,37 @@
             >
           </div>
           <div v-if="gender === '3'">
-            <p class="ml-4 mt-2">
-              Quý khách vui lòng thanh toán tại bất kỳ văn phòng Banda Fly trên
-              toàn quốc và các chi nhánh ngoài nước. Chi tiết Xin lưu ý, Quý
-              khách nên liên lạc trước khi đến để biết rõ hơn về giờ làm việc và
-              các hồ sơ cần chuẩn bị khi thanh toán.
-            </p>
+            <div
+              class="frame-cards conditionPament ml-4 mt-2"
+              id="conditionPament9"
+              style="display: block;"
+            >
+              <title></title>
+
+              <p align="left">
+                <strong
+                  ><font color="#fc3400"
+                    >HÌNH THỨC THANH TOÁN BẰNG THẺ ATM/ INTERNET BANKING</font
+                  ></strong
+                >
+              </p>
+              <p>
+                Banda Fly chấp nhận thanh toán bằng thẻ ATM qua cổng thanh toán
+                123 pay.
+              </p>
+              <p>
+                Hãy đảm bảo bạn đang sử dụng thẻ ATM do ngân hàng trong nước
+                phát hành và đã được kích hoạt chức năng thanh toán trực tuyến.
+              </p>
+              <p>
+                Hướng dẫn thanh toán thẻ qua cồng 123 pay :
+                <a
+                  href="https://123pay.vn/info/huong-dan/huong-dan"
+                  target="_blank"
+                  >https://123pay.vn/info/huong-dan/huong-dan</a
+                >
+              </p>
+            </div>
           </div>
 
           <div class="custom-control custom-radio">
@@ -386,16 +663,52 @@
               v-model="gender"
             />
             <label class="custom-control-label" for="defaultGroupExample4">
-              Thanh toán quét mã QRCode</label
-            >
+              Thanh toán thẻ tín dụng và ghi nợ quốc tế
+            </label>
           </div>
           <div v-if="gender === '4'">
-            <p class="ml-4 mt-2">
-              Quý khách vui lòng thanh toán tại bất kỳ văn phòng Banda Fly trên
-              toàn quốc và các chi nhánh ngoài nước. Chi tiết Xin lưu ý, Quý
-              khách nên liên lạc trước khi đến để biết rõ hơn về giờ làm việc và
-              các hồ sơ cần chuẩn bị khi thanh toán.
-            </p>
+            <div
+              class="frame-cards conditionPament ml-4 mt-2"
+              id="conditionPament15"
+              style=""
+            >
+              <p>
+                <strong>
+                  <font color="#fc3400">
+                    THANH TOÁN BẰNG THẺ TÍN DỤNG VÀ GHI NỢ QUỐC TẾ
+                  </font>
+                </strong>
+              </p>
+              <p>
+                <br />
+                Quý khách sử dụng Thẻ tín dụng hoặc Thẻ ghi nợ quốc tế được phát
+                hành bởi các Ngân hàng, Công ty tài chính và các tổ chức thẻ
+                quốc tế <b>Visa, MasterCard, JCB</b>. Giao dịch thanh toán của
+                quý khách được xử lý an toàn bởi CyberSource, công ty con của tổ
+                chức thẻ quốc tế VISA.<br />
+                <br />
+                CyberSource đạt chuẩn <b>PCI DSS</b> là một tiêu chuẩn an ninh
+                thông tin bắt buộc dành cho các doanh nghiệp lưu trữ, truyền tải
+                và xử lý thẻ thanh toán, được quản lý bởi Hội đồng Tiêu chuẩn An
+                toàn Ngành thanh toán thẻ <b>PCI SSC</b> được thành lập bởi các
+                tổ chức thẻ quốc tế. Banda Fly sử dụng giao thức HTTPS (giao
+                thức kết hợp giữa giao thức HTTP và giao thức bảo mật SSL) cho
+                toàn bộ website, ứng dụng di động, cùng với CyberSource nhằm đảm
+                bảo thông tin thanh toán của Quý khách được mã hóa trong quá
+                trình truyền tải, xử lý thanh toán thẻ, ngăn cản sự xâm nhập
+                trái phép, giả mạo thông tin.<br />
+                <br />
+                Banda Fly phối hợp với các tổ chức thẻ triển khai thành công
+                dịch vụ xác thực chủ thẻ giao dịch trực tuyến
+                <b>3-D Secure</b> bao gồm:
+                <b>Verified by Visa, MasterCard SecureCode, J/Secure</b> nhằm
+                gia tăng bảo mật, hạn chế gian lận thanh toán thẻ trực tuyến.<br />
+                <br />
+                Sau khi thanh toán thành công, Quý khách sẽ nhận được vé điện tử
+                qua email tự động, nhanh chóng và vẫn đảm bảo an toàn tuyệt đối
+                trong quá trình thanh toán.
+              </p>
+            </div>
           </div>
 
           <div class="custom-control custom-radio">
@@ -408,16 +721,35 @@
               v-model="gender"
             />
             <label class="custom-control-label" for="defaultGroupExample5">
-              Thanh toán momo</label
-            >
+              Thanh toán quét mã QRCode
+            </label>
           </div>
           <div v-if="gender === '5'">
-            <p class="ml-4 mt-2">
-              Quý khách vui lòng thanh toán tại bất kỳ văn phòng Banda Fly trên
-              toàn quốc và các chi nhánh ngoài nước. Chi tiết Xin lưu ý, Quý
-              khách nên liên lạc trước khi đến để biết rõ hơn về giờ làm việc và
-              các hồ sơ cần chuẩn bị khi thanh toán.
-            </p>
+            <div
+              class="frame-cards conditionPament ml-4 mt-2"
+              id="conditionPament16"
+              style="display: block;"
+            >
+              <div>
+                &nbsp;
+              </div>
+              <div>
+                Đây là cổng thanh toán cho phép Quý khách thanh toán từ tài
+                khoản ngân hàng thông qua hình thức quét mã QR trên tính năng QR
+                Pay trong ứng dụng Mobile Banking của các Ngân hàng.
+              </div>
+              <div>
+                &nbsp;
+              </div>
+              <div>
+                Sau khi Thông tin đặt tour của Quý khách được xác nhận, hệ thống
+                sẽ hiển thị mã QR để Quý khách dùng thiết bị di động quét mã
+                thanh toán.&nbsp;
+              </div>
+              <div>
+                &nbsp;
+              </div>
+            </div>
           </div>
           <mdb-row class="mt-4 border-bottom"></mdb-row>
         </mdb-col>
@@ -787,8 +1119,8 @@
       <mdb-row>
         <mdb-col class="text-center">
           <mdb-btn color="danger">
-            Đặt tour <mdb-icon icon="arrow-right" class="ml-1"
-          /></mdb-btn>
+            Đặt tour <mdb-icon icon="arrow-right" class="ml-1" />
+          </mdb-btn>
         </mdb-col>
       </mdb-row>
 
@@ -816,32 +1148,74 @@ import CardsTour from '../components/Cards-tour.vue';
 import FooterB from '../components/FooterB.vue';
 import NavPage from '../components/NavPage.vue';
 import NavUser from '../components/NavUser.vue';
+import moment from 'moment';
 export default {
   components: { NavUser, FooterB, NavPage, CardsTour },
   data() {
     return {
       value: 2,
-      gender: 'gender',
-      items: [
-        {
-          img: true,
-          src: 'https://mdbootstrap.com/img/Photos/Slides/img%20(15).jpg',
-        },
-        {
-          img: true,
-          src: 'https://mdbootstrap.com/img/Photos/Slides/img%20(16).jpg',
-        },
-        {
-          img: true,
-          src: 'https://mdbootstrap.com/img/Photos/Slides/img%20(17).jpg',
-        },
-      ],
+      tour: [],
+      gender: '1',
+      items: [],
+      surcharge: 1000000,
+      numberAdults: 1,
+      numberChildren: 0,
+      numberYoung: 0,
+      numberClass: 0,
+      total: null,
+      moneyClass: null,
+      totalMoney: null,
     };
   },
   mounted() {
-    console.log(this.gender);
+    this.findTour();
+    this.totalOfPeople();
+    this.sumTotalMoney();
   },
-  methods: {},
+  methods: {
+    sumTotalMoney() {
+      this.moneyClass = parseInt(this.numberClass) * this.surcharge;
+      this.totalMoney =
+        parseInt(this.numberAdults) * this.tour.priceDetail.adult +
+        parseInt(this.numberChildren) *
+          this.tour.priceDetail.underTheAgeOfTwelve +
+        parseInt(this.numberYoung) * this.tour.priceDetail.underTheAgeOfFive +
+        parseInt(this.moneyClass);
+    },
+    totalOfPeople() {
+      this.total =
+        parseInt(this.numberAdults) +
+        parseInt(this.numberChildren) +
+        parseInt(this.numberYoung);
+      this.sumTotalMoney();
+    },
+    findTour() {
+      let uri = `${process.env.VUE_APP_PORT}/tour/${this.$route.params.id}`;
+      this.axios.get(uri, this.data).then((response) => {
+        this.tour = response.data.data;
+        console.log(this.tour);
+        // Lấy hình
+        this.tour.listImage.forEach((img) => {
+          const a = {
+            img: true,
+            src: img,
+          };
+          this.items.push(a);
+        });
+      });
+    },
+
+    formatDate(value) {
+      return moment(value).format('MMMM DD YYYY');
+    },
+    formatMoney(money) {
+      const formatter = new Intl.NumberFormat('vi', {
+        style: 'currency',
+        currency: 'VND',
+      });
+      return formatter.format(money);
+    },
+  },
 };
 </script>
 

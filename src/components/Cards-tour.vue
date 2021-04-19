@@ -1,13 +1,20 @@
 <template>
   <mdb-card-group deck>
-    <template v-for="(img, i) in basic.slice(0, 3)">
-      <mdb-card :key="i">
-        <router-link to="/detail-tour">
-          <mdb-card-image :src="img" alt="Card image cap"></mdb-card-image>
+    <template v-for="tour in items.slice(0, 3)">
+      <mdb-card :key="tour._id">
+        <div v-on:click="detail(tour._id)">
+          <mdb-card-image
+            :src="tour.listImage[2]"
+            alt="Card image cap"
+            class="custom-img"
+          ></mdb-card-image>
           <mdb-card-body class="pb-0">
-            <mdb-card-title> Bay cùng Vietravel {{ i + 1 }} </mdb-card-title>
+            <mdb-card-title class="text-truncate" style="max-width: 300px;">
+              {{ tour.tourName }}
+            </mdb-card-title>
             <mdb-card-text>
               <hr />
+
               <mdb-row>
                 <mdb-col col="2">
                   <mdb-icon icon="map-marked-alt"> </mdb-icon>
@@ -16,7 +23,7 @@
                   <span> Nơi khởi hành:</span>
                 </mdb-col>
                 <mdb-col col="6" class="pl-0">
-                  <span> Hồ chí minh </span>
+                  <span> {{ tour.startPlace }} </span>
                 </mdb-col>
               </mdb-row>
 
@@ -28,7 +35,7 @@
                   <span> Số vé:</span>
                 </mdb-col>
                 <mdb-col col="6" class="pl-0">
-                  <span> 6 vé </span>
+                  <span> {{ tour.numberOfParticipants }} vé </span>
                 </mdb-col>
               </mdb-row>
 
@@ -37,10 +44,10 @@
                   <mdb-icon icon="calendar-alt"> </mdb-icon>
                 </mdb-col>
                 <mdb-col col="4" class="pl-0">
-                  <span> 16/4/1999:</span>
+                  <span> {{ formatDate(tour.startDate) }}</span>
                 </mdb-col>
                 <mdb-col col="6" class="pl-0">
-                  <span> 3 ngày </span>
+                  <span> {{ tour.numberOfDays }} ngày </span>
                 </mdb-col>
               </mdb-row>
 
@@ -51,10 +58,12 @@
               </mdb-row>
             </mdb-card-text>
             <div class="price" style="width: 12rem;">
-              <p class="card-price">1250 р.</p>
+              <p class="card-price">
+                {{ formatMony(tour.priceDetail.adult) }}
+              </p>
             </div>
           </mdb-card-body>
-        </router-link>
+        </div>
       </mdb-card>
     </template>
   </mdb-card-group>
@@ -62,6 +71,8 @@
 
 <script>
 import { mdbCard, mdbCardText, mdbCardBody, mdbRating } from 'mdbvue';
+import moment from 'moment';
+
 export default {
   name: 'CarouselPage',
   components: {
@@ -70,25 +81,46 @@ export default {
     mdbCardBody,
     mdbRating,
   },
+
   data() {
     return {
       value: 2,
-      basic: [
-        'https://mdbootstrap.com/img/Photos/Others/img (36).jpg',
-        'https://mdbootstrap.com/img/Photos/Others/img (34).jpg',
-        'https://mdbootstrap.com/img/Photos/Others/img (38).jpg',
-        'https://mdbootstrap.com/img/Photos/Others/img (29).jpg',
-        'https://mdbootstrap.com/img/Photos/Others/img (30).jpg',
-        'https://mdbootstrap.com/img/Photos/Others/img (27).jpg',
-        'https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(53).jpg',
-        'https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(45).jpg',
-        'https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(51).jpg',
-      ],
+      items: [],
     };
+  },
+  mounted() {
+    this.getAllTour();
+  },
+
+  methods: {
+    formatMony(money) {
+      const formatter = new Intl.NumberFormat('vi', {
+        style: 'currency',
+        currency: 'VND',
+      });
+      return formatter.format(money);
+    },
+    getAllTour() {
+      let uri = `${process.env.VUE_APP_PORT}/tours`;
+      this.axios.get(uri, this.ticket).then((response) => {
+        this.items = response.data.data;
+      });
+    },
+
+    formatDate(value) {
+      return moment(value).format('MMMM DD YYYY');
+    },
+    detail(idTour) {
+      this.$router.push({ name: 'TourDetail', params: { id: idTour } });
+    },
   },
 };
 </script>
 <style>
+.custom-img img {
+  height: 201px;
+  width: 367px;
+}
 .price {
   margin-top: -212px;
   margin-left: -39px;

@@ -474,7 +474,7 @@ export default {
   margin-left: -75px;
   position: absolute;
 }
-b {
+.b {
   font-size: 25px;
   font-weight: bold;
 }

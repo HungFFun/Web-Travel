@@ -9,11 +9,17 @@
         <div v-for="tour in items" :key="tour._id">
           <hr class="my-3" />
           <mdb-row>
+            <mdb-col col="12">
+              <p class="tour-name">{{ tour.tourName }}</p>
+            </mdb-col>
+          </mdb-row>
+
+          <mdb-row>
             <mdb-col lg="5">
               <mdb-view class="rounded z-depth-2 mb-lg-0 " hover>
                 <img
                   class="img-fluid"
-                  :src="tour.listImage[0]"
+                  :src="tour.listImage[2]"
                   alt="Sample image"
                 />
               </mdb-view>
@@ -21,14 +27,13 @@
             <mdb-col lg="7">
               <mdb-row>
                 <mdb-col col="12">
-                  <p class="tour-name">{{ tour.tourName }}</p>
                   <mdb-icon icon="barcode" class="mr-1 mb-1" />
                   <span class="tour-code">{{ tour.tourId }}</span>
                 </mdb-col>
               </mdb-row>
 
               <hr />
-              <mdb-row class="mt-4">
+              <mdb-row class="mt-3">
                 <mdb-col col="6">
                   <span class="font-weight-bold">Khởi hành:</span> <br />
                   <span class="font-weight-bold">Thời gian:</span> <br />
@@ -43,18 +48,20 @@
                     {{ tour.numberOfDays }} Ngày
                   </span>
                   <br />
-                  <span class="text-monospace">Hồ Chí Minh</span>
+                  <span class="text-monospace">{{ tour.startPlace }}</span>
                 </mdb-col>
               </mdb-row>
               <hr />
-              <mdb-row class="mt-4">
+              <mdb-row class="mt-3">
                 <mdb-col col="6">
                   <span class="font-weight-bold">Giá vé:</span><br />
 
                   <span class="font-weight-bold">Số vé còn:</span>
                 </mdb-col>
                 <mdb-col col="6" class="pl-0">
-                  <span class="tour-name">{{ tour.priceDetail.adult }} đ</span>
+                  <span class="tour-name">{{
+                    formatMoney(tour.priceDetail.adult)
+                  }}</span>
                   <br />
                   <span class="text-monospace">
                     {{ tour.numberOfParticipants }}
@@ -95,6 +102,16 @@ export default {
 
     formatDate(value) {
       return moment(value).format('MMMM DD YYYY');
+    },
+    formatMoney(money) {
+      const formatter = new Intl.NumberFormat('vi', {
+        style: 'currency',
+        currency: 'VND',
+      });
+      return formatter.format(money);
+    },
+    initEdit(idTour) {
+      this.$router.push({ name: 'detail-tour', params: { id: idTour } });
     },
   },
 };

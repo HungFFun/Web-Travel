@@ -7,12 +7,10 @@
       <mdb-row>
         <mdb-col cols="12" class="pl-0">
           <p class="tour-name">
-            Bay cùng Vietravel Airlines: Sapa - Fansipan - Lào Cai - Hà Nội -
-            Yên Tử - Hạ Long (Tặng vé tàu hỏa Mường Hoa, khách sạn 4 sao tại Hạ
-            Long)
+            {{ tour.tourName }}
           </p>
           <mdb-icon icon="barcode" class="mr-1 mb-1" />
-          <span class="tour-code">NDSGN136-001-130421VU-V-1</span>
+          <span class="tour-code">{{ tour.tourId }}</span>
         </mdb-col>
       </mdb-row>
       <mdb-row style="background-color: #f1f1f1;">
@@ -69,9 +67,13 @@
               <span class="font-weight-bold">Nơi khởi hành:</span>
             </mdb-col>
             <mdb-col col="6" class="pl-0">
-              <span class="text-monospace">16/04/2021</span> <br />
-              <span class="text-monospace">6 Ngày</span> <br />
-              <span class="text-monospace">Hồ Chí Minh</span>
+              <span class="text-monospace">
+                {{ formatDate(tour.startDate) }}
+              </span>
+              <br />
+              <span class="text-monospace"> {{ tour.numberOfDays }} Ngày</span>
+              <br />
+              <span class="text-monospace"> {{ tour.startPlace }} </span>
             </mdb-col>
           </mdb-row>
           <hr />
@@ -82,8 +84,13 @@
               <span class="font-weight-bold">Số vé còn:</span>
             </mdb-col>
             <mdb-col col="6" class="pl-0">
-              <span class="tour-name">6.000.000 đ</span> <br />
-              <span class="text-monospace"> 9 </span>
+              <span class="tour-name">
+                {{ formatMoney(tour.priceDetail.adult) }}
+              </span>
+              <br />
+              <span class="text-monospace">
+                {{ tour.numberOfParticipants }}
+              </span>
             </mdb-col>
           </mdb-row>
           <hr />
@@ -93,7 +100,7 @@
                 color="danger"
                 style="width: 326px;"
                 icon="cart-plus"
-                @click="bookTour()"
+                @click="bookTour(tour._id)"
               >
                 Đặt ngay</mdb-btn
               >
@@ -184,92 +191,25 @@
                 </mdb-col>
               </mdb-row>
               <mdb-container>
-                <mdb-row class="mt-2 flex-grow-1">
+                <mdb-row
+                  class="mt-2 flex-grow-1 pb-2"
+                  v-for="i in tour.numDay.length"
+                  :key="i"
+                >
                   <mdb-col
                     col="3"
                     class=" text-center  border-right border-danger flex-grow-1"
                   >
                     <h3 class="font-weight-bold " style="  color: #ff002d;">
-                      Ngày 1
+                      {{ tour.numDay[i - 1] }}
                     </h3>
-                    <span class="font-weight-bold ">16/04/1999</span>
+                    <span class="font-weight-bold ">
+                      {{ formatDate(tour.startDate) }}
+                    </span>
                   </mdb-col>
                   <mdb-col col="9">
                     <p>
-                      Quý khách tập trung tại sân bay Tân Sơn Nhất - ga đi trong
-                      nước. Hướng dẫn viên làm thủ tục cho đoàn đáp chuyến bay
-                      đi Hà Nội. Xe Vietravel đón đoàn tại sân bay Nội Bài, khởi
-                      hành đi Sa Pa theo cung đường cao tốc hiện đại và dài nhất
-                      Việt Nam. Đến Sapa, nhận phòng nghỉ ngơi. Buổi chiều Quý
-                      khách tham quan: - Bản Cát Cát đẹp như một bức tranh giữa
-                      vùng phố cổ Sapa, nơi đây thu hút du khách bởi cầu treo,
-                      thác nước, guồng nước và những mảng màu hoa mê hoặc du
-                      khách khi lạc bước đến đây - Thăm những nếp nhà của người
-                      Mông trong bản, du khách sẽ không khỏi ngỡ ngàng trước vẻ
-                      đẹp bình dị, mộc mạc. Buổi tối Quý khách dạo phố, ngắm nhà
-                      thờ Đá Sapa, tự do thưởng thức đặc sản vùng cao như: thịt
-                      lợn cắp nách nướng, trứng nướng, rượu táo mèo, giao lưu
-                      với người dân tộc vùng cao. Xem nội dung đầy đủ tại:
-                    </p>
-                  </mdb-col>
-                </mdb-row>
-                <mdb-row class="mt-2 ">
-                  <mdb-col
-                    col="3"
-                    class="text-center border-right border-danger"
-                  >
-                    <br />
-                    <h3 class="font-weight-bold " style="  color: #ff002d;">
-                      Ngày 1
-                    </h3>
-                    <span class="font-weight-bold ">16/04/1999</span>
-                  </mdb-col>
-                  <mdb-col col="9">
-                    <p>
-                      Quý khách tập trung tại sân bay Tân Sơn Nhất - ga đi trong
-                      nước. Hướng dẫn viên làm thủ tục cho đoàn đáp chuyến bay
-                      đi Hà Nội. Xe Vietravel đón đoàn tại sân bay Nội Bài, khởi
-                      hành đi Sa Pa theo cung đường cao tốc hiện đại và dài nhất
-                      Việt Nam. Đến Sapa, nhận phòng nghỉ ngơi. Buổi chiều Quý
-                      khách tham quan: - Bản Cát Cát đẹp như một bức tranh giữa
-                      vùng phố cổ Sapa, nơi đây thu hút du khách bởi cầu treo,
-                      thác nước, guồng nước và những mảng màu hoa mê hoặc du
-                      khách khi lạc bước đến đây - Thăm những nếp nhà của người
-                      Mông trong bản, du khách sẽ không khỏi ngỡ ngàng trước vẻ
-                      đẹp bình dị, mộc mạc. Buổi tối Quý khách dạo phố, ngắm nhà
-                      thờ Đá Sapa, tự do thưởng thức đặc sản vùng cao như: thịt
-                      lợn cắp nách nướng, trứng nướng, rượu táo mèo, giao lưu
-                      với người dân tộc vùng cao. Xem nội dung đầy đủ tại:
-                    </p>
-                  </mdb-col>
-                </mdb-row>
-                <mdb-row class="mt-2 ">
-                  <mdb-col
-                    col="3"
-                    class="text-center border-right border-danger"
-                  >
-                    <br />
-                    <h3 class="font-weight-bold " style="  color: #ff002d;">
-                      Ngày 1
-                    </h3>
-                    <span class="font-weight-bold ">16/04/1999</span>
-                  </mdb-col>
-                  <mdb-col col="9">
-                    <p>
-                      Quý khách tập trung tại sân bay Tân Sơn Nhất - ga đi trong
-                      nước. Hướng dẫn viên làm thủ tục cho đoàn đáp chuyến bay
-                      đi Hà Nội. Xe Vietravel đón đoàn tại sân bay Nội Bài, khởi
-                      hành đi Sa Pa theo cung đường cao tốc hiện đại và dài nhất
-                      Việt Nam. Đến Sapa, nhận phòng nghỉ ngơi. Buổi chiều Quý
-                      khách tham quan: - Bản Cát Cát đẹp như một bức tranh giữa
-                      vùng phố cổ Sapa, nơi đây thu hút du khách bởi cầu treo,
-                      thác nước, guồng nước và những mảng màu hoa mê hoặc du
-                      khách khi lạc bước đến đây - Thăm những nếp nhà của người
-                      Mông trong bản, du khách sẽ không khỏi ngỡ ngàng trước vẻ
-                      đẹp bình dị, mộc mạc. Buổi tối Quý khách dạo phố, ngắm nhà
-                      thờ Đá Sapa, tự do thưởng thức đặc sản vùng cao như: thịt
-                      lợn cắp nách nướng, trứng nướng, rượu táo mèo, giao lưu
-                      với người dân tộc vùng cao. Xem nội dung đầy đủ tại:
+                      {{ tour.detail[i - 1] }}
                     </p>
                   </mdb-col>
                 </mdb-row>
@@ -302,6 +242,8 @@ import CardsTour from '../components/Cards-tour.vue';
 import FooterB from '../components/FooterB.vue';
 import NavPage from '../components/NavPage.vue';
 import NavB from '../components/NavUser.vue';
+import moment from 'moment';
+
 import { mdbRating } from 'mdbvue';
 export default {
   components: {
@@ -313,27 +255,43 @@ export default {
   },
   data() {
     return {
+      tour: [],
       value: 2,
-      items: [
-        {
-          img: true,
-          src: 'https://mdbootstrap.com/img/Photos/Slides/img%20(15).jpg',
-        },
-        {
-          img: true,
-          src: 'https://mdbootstrap.com/img/Photos/Slides/img%20(16).jpg',
-        },
-        {
-          img: true,
-          src: 'https://mdbootstrap.com/img/Photos/Slides/img%20(17).jpg',
-        },
-      ],
+      items: [],
     };
   },
-  mounted() {},
+  mounted() {
+    this.findTour();
+  },
   methods: {
-    bookTour() {
-      this.$router.push({ name: 'BookTour' });
+    bookTour(idTour) {
+      this.$router.push({ name: 'BookTour', params: { id: idTour } });
+    },
+
+    findTour() {
+      let uri = `${process.env.VUE_APP_PORT}/tour/${this.$route.params.id}`;
+      this.axios.get(uri, this.data).then((response) => {
+        this.tour = response.data.data;
+        // Lấy hình
+        this.tour.listImage.forEach((img) => {
+          const a = {
+            img: true,
+            src: img,
+          };
+          this.items.push(a);
+        });
+      });
+    },
+
+    formatDate(value) {
+      return moment(value).format('MMMM DD YYYY');
+    },
+    formatMoney(money) {
+      const formatter = new Intl.NumberFormat('vi', {
+        style: 'currency',
+        currency: 'VND',
+      });
+      return formatter.format(money);
     },
   },
 };
