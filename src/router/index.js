@@ -4,6 +4,9 @@ import HelloWorld from '../page/HelloWorld.vue';
 import TourDetail from '../page/TourDetail.vue';
 import BookTour from '../page/BookTour.vue';
 import ListTour from '../page/ListTour.vue';
+import ProductSuggestion from '../page/ProductSuggestion.vue';
+import Confirm from '../page/ConfirmTour.vue';
+import Payment from '../page/Payment.vue';
 
 Vue.use(Router);
 
@@ -28,6 +31,21 @@ export default new Router({
       path: '/list-tour',
       name: 'ListTour',
       component: ListTour,
+    },
+    {
+      path: '/product-suggestion',
+      name: 'ProductSuggestion',
+      component: ProductSuggestion,
+    },
+    {
+      path: '/Confirm',
+      name: 'Confirm',
+      component: Confirm,
+    },
+    {
+      path: '/Payment',
+      name: 'Payment',
+      component: Payment,
     },
   ],
 });

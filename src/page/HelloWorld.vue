@@ -271,19 +271,21 @@
         </mdb-col>
       </mdb-row>
 
-      <section class="text-center  m-5">
-        <h2 class="h1-responsive font-weight-bold text-center ">
-          Sản phẩm đáng chú ý
-        </h2>
-        <p class="grey-text text-center w-responsive mx-auto mb-5">
-          Những sản phẩm thích hợp cho những chuyến du lich
-        </p>
+      <mdb-container>
+        <section class="text-center  m-5">
+          <h2 class="h1-responsive font-weight-bold text-center ">
+            Sản phẩm đáng chú ý
+          </h2>
+          <p class="grey-text text-center w-responsive mx-auto mb-5">
+            Những sản phẩm thích hợp cho những chuyến du lich
+          </p>
+        </section>
         <mdb-row class="mr-0 mt-5 mb-5">
           <mdb-col col="12" class=" pr-0">
             <cards-product></cards-product>
           </mdb-col>
         </mdb-row>
-      </section>
+      </mdb-container>
       <mdb-row class="mr-0 mt-5 mb-5 p-5">
         <mdb-col col="12" class=" text-center pr-0">
           <img src="https://travel.com.vn/Content/ThemeHe/img/conma-bot.png" />
@@ -443,7 +445,7 @@ export default {
   background-color: #f1f1f1;
   border-radius: 5px;
   margin-top: -1rem;
-  margin-left: 23rem;
+  margin-left: 28rem;
 }
 .img {
   margin-left: -21px;

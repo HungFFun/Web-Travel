@@ -193,24 +193,22 @@
               <mdb-container>
                 <mdb-row
                   class="mt-2 flex-grow-1 pb-2"
-                  v-for="i in tour.numDay.length"
-                  :key="i"
+                  v-for="(value, index) in tour.numDay"
+                  :key="index"
                 >
                   <mdb-col
                     col="3"
                     class=" text-center  border-right border-danger flex-grow-1"
                   >
                     <h3 class="font-weight-bold " style="  color: #ff002d;">
-                      {{ tour.numDay[i - 1] }}
+                      {{ tour.numDay[index] }}
                     </h3>
                     <span class="font-weight-bold ">
                       {{ formatDate(tour.startDate) }}
                     </span>
                   </mdb-col>
                   <mdb-col col="9">
-                    <p>
-                      {{ tour.detail[i - 1] }}
-                    </p>
+                    <p v-html="tour.detail[index]"></p>
                   </mdb-col>
                 </mdb-row>
               </mdb-container>
@@ -255,7 +253,11 @@ export default {
   },
   data() {
     return {
-      tour: [],
+      tour: {
+        priceDetail: {
+          adult: null,
+        },
+      },
       value: 2,
       items: [],
     };
