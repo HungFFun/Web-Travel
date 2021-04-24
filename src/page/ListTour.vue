@@ -3,8 +3,113 @@
     <nav-user></nav-user>
 
     <mdb-container>
-      <div style="height:6rem"></div>
-      <nav-page></nav-page>
+      <nav-page class="mt-5 pt-5"></nav-page>
+      <!-- tìm kiếm  -->
+
+      <mdb-tbl>
+        <mdb-tbl-body>
+          <tr class="text-center">
+            <td class="font-weight-bold" style="padding-top: 29px;">
+              Nơi khỏi hành
+            </td>
+            <td>
+              <select
+                class="browser-default custom-select select_gender"
+                style="height:48px"
+                v-model="post.startPlace"
+                v-on:change="getAllTour()"
+              >
+                <option selected> -- Tất cả -- </option>
+                <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                <option value="Hà Nội">Hà Nội</option>
+                <option value="Binh Dương">Bình Dương</option>
+                <option value="Cà Mau">Cà Mau</option>
+                <option value="Cần Thơ">Cần Thơ</option>
+                <option value="Đà Lạt">Đà Lạt</option>
+                <option value="Hải Phòng">Hải Phòng</option>
+                <option value="Huế">Huế</option>
+                <option value="Nha Trang">Nha Trang</option>
+                <option value="Phú Quốc">Phú Quốc</option>
+                <option value="Vinh">Vinh</option>
+                <option value="Vũng tau">Vũng tau</option>
+              </select>
+            </td>
+            <td class="font-weight-bold" style="padding-top: 29px;">
+              Giá
+            </td>
+            <td>
+              <select
+                class="browser-default custom-select select_gender "
+                style="height:48px"
+                v-model="post.adult"
+                v-on:change="getAllTour()"
+              >
+                <option selected> -- Tất cả -- </option>
+                <option value="1">Dưới 1 triệu</option>
+                <option value="2">2-4 triệu</option>
+                <option value="3">4-6 triệu</option>
+                <option value="4">4-6 triệu</option>
+                <option value="5">Trên 10 triệu</option>
+              </select>
+            </td>
+            <td class="font-weight-bold" style="padding-top: 29px;">
+              Ngày đi
+            </td>
+            <td>
+              <input
+                type="date"
+                id="example1"
+                class="form-control form-control-lg select_gender "
+                v-model="post.startDate"
+                v-on:click="getAllTour()"
+              />
+            </td>
+          </tr>
+          <tr class="text-center">
+            <td class="font-weight-bold" style="padding-top: 29px;">
+              Phương tiện di chuyển
+            </td>
+            <td>
+              <select
+                class="browser-default custom-select select_gender "
+                style="height:48px"
+                v-model="post.endDate"
+                v-on:change="getAllTour()"
+              >
+                <option selected> -- Tất cả -- </option>
+                <option value="Máy bay">Máy bay</option>
+                <option value="Ô tô">Ô tô</option>
+                <option value="Xe lửa">Xe lửa</option>
+              </select>
+            </td>
+            <td class="font-weight-bold" style="padding-top: 29px;">
+              Chỗ ngồi
+            </td>
+            <td>
+              <select
+                class="browser-default custom-select select_gender "
+                style="height:48px"
+              >
+                <option selected value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+              </select>
+            </td>
+            <td class="font-weight-bold" style="padding-top: 29px;">
+              Ngày về
+            </td>
+            <td>
+              <input
+                type="date"
+                id="example1"
+                class="form-control form-control-lg select_gender "
+                v-model="post.endDate"
+                v-on:click="getAllTour()"
+              />
+            </td>
+          </tr>
+        </mdb-tbl-body>
+      </mdb-tbl>
+
       <template>
         <div v-for="tour in items" :key="tour._id">
           <div v-on:click="detail(tour._id)">
@@ -89,6 +194,12 @@ export default {
   data() {
     return {
       items: [],
+      post: {
+        startPlace: null,
+        endDate: null,
+        adult: null,
+        startDate: null,
+      },
     };
   },
   mounted() {
@@ -96,8 +207,8 @@ export default {
   },
   methods: {
     getAllTour() {
-      let uri = `${process.env.VUE_APP_PORT}/tours`;
-      this.axios.get(uri, this.ticket).then((response) => {
+      let uri = `${process.env.VUE_APP_PORT}/tours/keyword`;
+      this.axios.post(uri, this.post).then((response) => {
         this.items = response.data.data;
       });
     },
@@ -122,4 +233,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style>
+.select_gender {
+  color: black;
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  border: none;
+  border-bottom: 1px solid #c6c6c6;
+}
+</style>
