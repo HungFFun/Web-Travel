@@ -23,7 +23,7 @@
       </mdb-row>
       <mdb-row class="mt-5 mb-4">
         <mdb-col cols="12" class="pl-0 text-center">
-          <cards-product></cards-product>
+          <cards-product v-bind:typeTravel="typeTravel"></cards-product>
         </mdb-col>
       </mdb-row>
 
@@ -39,7 +39,7 @@
 
       <mdb-row class="mt-5 mb-4">
         <mdb-col cols="12" class="pl-0 text-center">
-          <cards-product></cards-product>
+          <cards-product v-bind:typeTravel="typeTravelNull"></cards-product>
         </mdb-col>
       </mdb-row>
 
@@ -63,11 +63,22 @@ import NavPage from '../components/NavPage.vue';
 import NavUser from '../components/NavUser.vue';
 export default {
   components: { NavUser, NavPage, CardsProduct, FooterB },
-  mounted() {
-    this.loadData();
+  beforeCreate() {},
+  data() {
+    return {
+      tour: {},
+      typeTravel: {
+        type: this.$store.getters.inTour.typesOftourism,
+        numberProduct: 3,
+      },
+      typeTravelNull: {
+        type: 'null',
+        numberProduct: 100,
+      },
+    };
   },
+  mounted() {},
   methods: {
-    loadData() {},
     confirm() {
       this.$router.push({ name: 'Confirm' });
     },

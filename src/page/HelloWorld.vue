@@ -246,10 +246,7 @@
       </section>
       <mdb-container>
         <mdb-row>
-          <cards-tour></cards-tour>
-        </mdb-row>
-        <mdb-row class="mt-4">
-          <cards-tour></cards-tour>
+          <cards-tour v-bind:numberTour="6"></cards-tour>
         </mdb-row>
       </mdb-container>
 
@@ -282,7 +279,7 @@
         </section>
         <mdb-row class="mr-0 mt-5 mb-5">
           <mdb-col col="12" class=" pr-0">
-            <cards-product></cards-product>
+            <cards-product v-bind:typeTravel="typeTravelNull"></cards-product>
           </mdb-col>
         </mdb-row>
       </mdb-container>
@@ -418,6 +415,10 @@ export default {
             'https://images.unsplash.com/photo-1614019465575-16b8a61df7f1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
         },
       ],
+      typeTravelNull: {
+        type: 'null',
+        numberProduct: 3,
+      },
     };
   },
   mounted() {},

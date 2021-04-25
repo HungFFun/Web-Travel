@@ -1,7 +1,7 @@
 <template>
-  <mdb-card-group deck>
-    <template v-for="tour in items.slice(0, 3)">
-      <mdb-card :key="tour._id">
+  <div>
+    <template v-for="tour in items.slice(0, numberTour)">
+      <mdb-card :key="tour._id" style="width: 331px;float: left;" class="m-3">
         <div v-on:click="detail(tour._id)">
           <mdb-card-image
             :src="tour.listImage[2]"
@@ -66,7 +66,7 @@
         </div>
       </mdb-card>
     </template>
-  </mdb-card-group>
+  </div>
 </template>
 
 <script>
@@ -80,6 +80,9 @@ export default {
     mdbCardText,
     mdbCardBody,
     mdbRating,
+  },
+  props: {
+    numberTour: Number,
   },
 
   data() {

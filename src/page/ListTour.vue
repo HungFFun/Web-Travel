@@ -19,19 +19,24 @@
                 v-model="post.startPlace"
                 v-on:change="getAllTour()"
               >
-                <option selected> -- Tất cả -- </option>
-                <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                <option value="null"> -- Tất cả -- </option>
                 <option value="Hà Nội">Hà Nội</option>
+                <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                <option value="Đà Lạt">Đà Lạt</option>
+                <option value="Vũng tàu">Vũng tàu</option>
+                <option value="Phú Quốc">Phú Quốc</option>
                 <option value="Binh Dương">Bình Dương</option>
+                <option value="Buôn Mê Thuột">Buôn Mê Thuột</option>
                 <option value="Cà Mau">Cà Mau</option>
                 <option value="Cần Thơ">Cần Thơ</option>
-                <option value="Đà Lạt">Đà Lạt</option>
                 <option value="Hải Phòng">Hải Phòng</option>
                 <option value="Huế">Huế</option>
+                <option value="Long Xuyên">Long Xuyên</option>
                 <option value="Nha Trang">Nha Trang</option>
-                <option value="Phú Quốc">Phú Quốc</option>
+                <option value="Quảng Ninh">Quảng Ninh</option>
+                <option value="Quy Nhơn">Quy Nhơn</option>
+                <option value="Rạch Giá">Rạch Giá</option>
                 <option value="Vinh">Vinh</option>
-                <option value="Vũng tau">Vũng tau</option>
               </select>
             </td>
             <td class="font-weight-bold" style="padding-top: 29px;">
@@ -44,11 +49,11 @@
                 v-model="post.adult"
                 v-on:change="getAllTour()"
               >
-                <option selected> -- Tất cả -- </option>
+                <option value="null"> -- Tất cả -- </option>
                 <option value="1">Dưới 1 triệu</option>
                 <option value="2">2-4 triệu</option>
                 <option value="3">4-6 triệu</option>
-                <option value="4">4-6 triệu</option>
+                <option value="4">6-10 triệu</option>
                 <option value="5">Trên 10 triệu</option>
               </select>
             </td>
@@ -56,12 +61,22 @@
               Ngày đi
             </td>
             <td>
+              <div class="clear-date">
+                <mdb-btn
+                  v-on:click="clearStartDate()"
+                  outline="primary"
+                  style=" border: none !important;font-size: 17px;color: black !important;"
+                  >X</mdb-btn
+                >
+              </div>
+
               <input
                 type="date"
-                id="example1"
+                id="startDate"
                 class="form-control form-control-lg select_gender "
                 v-model="post.startDate"
-                v-on:click="getAllTour()"
+                required="required"
+                v-on:change="getAllTour()"
               />
             </td>
           </tr>
@@ -76,40 +91,50 @@
                 v-model="post.endDate"
                 v-on:change="getAllTour()"
               >
-                <option selected> -- Tất cả -- </option>
+                <option value="null"> -- Tất cả -- </option>
                 <option value="Máy bay">Máy bay</option>
                 <option value="Ô tô">Ô tô</option>
                 <option value="Xe lửa">Xe lửa</option>
               </select>
             </td>
             <td class="font-weight-bold" style="padding-top: 29px;">
-              Chỗ ngồi
+              Số vé còn
             </td>
             <td>
               <select
                 class="browser-default custom-select select_gender "
                 style="height:48px"
               >
-                <option selected value="Nam">Nam</option>
-                <option value="Nữ">Nữ</option>
+                <option value="null"> -- Còn chỗ -- </option>
+                <option value="1">Trên 5 vé</option>
+                <option value="2">Trên 10 vé</option>
               </select>
             </td>
             <td class="font-weight-bold" style="padding-top: 29px;">
               Ngày về
             </td>
             <td>
+              <div class="clear-date">
+                <mdb-btn
+                  v-on:click="clearEndDate()"
+                  outline="primary"
+                  style=" border: none !important;font-size: 17px;color: black !important;"
+                  >X</mdb-btn
+                >
+              </div>
               <input
                 type="date"
                 id="example1"
                 class="form-control form-control-lg select_gender "
                 v-model="post.endDate"
-                v-on:click="getAllTour()"
+                v-on:change="getAllTour()"
               />
             </td>
           </tr>
         </mdb-tbl-body>
       </mdb-tbl>
 
+      <!-- danh sách tour  -->
       <template>
         <div v-for="tour in items" :key="tour._id">
           <div v-on:click="detail(tour._id)">
@@ -179,6 +204,22 @@
           </div>
         </div>
       </template>
+
+      <!-- không tìm thấy tour  -->
+      <mdb-row
+        v-if="items.length === 0"
+        style="height: 33rem"
+        class="mt-1 pt-5 mb-5 pb-5 border-top"
+      >
+        <mdb-col class="text-center">
+          <img
+            src="../assets/panda.jpg"
+            class="img-fluid"
+            alt="Responsive image"
+            style="width: 20rem;"
+          />
+        </mdb-col>
+      </mdb-row>
     </mdb-container>
     <footer-b></footer-b>
   </div>
@@ -194,6 +235,7 @@ export default {
   data() {
     return {
       items: [],
+
       post: {
         startPlace: null,
         endDate: null,
@@ -207,6 +249,16 @@ export default {
   },
   methods: {
     getAllTour() {
+      if (this.post.startPlace === 'null') {
+        this.post.startPlace = null;
+      }
+      if (this.post.endDate === 'null') {
+        this.post.endDate = null;
+      }
+      if (this.post.adult === 'null') {
+        this.post.adult = null;
+      }
+
       let uri = `${process.env.VUE_APP_PORT}/tours/keyword`;
       this.axios.post(uri, this.post).then((response) => {
         this.items = response.data.data;
@@ -214,7 +266,7 @@ export default {
     },
 
     formatDate(value) {
-      return moment(value).format('MMMM DD YYYY');
+      return moment(value).format('YYYY/MM/DD');
     },
     formatMoney(money) {
       const formatter = new Intl.NumberFormat('vi', {
@@ -229,6 +281,14 @@ export default {
     detail(idTour) {
       this.$router.push({ name: 'TourDetail', params: { id: idTour } });
     },
+    clearStartDate() {
+      this.post.startDate = null;
+      this.getAllTour();
+    },
+    clearEndDate() {
+      this.post.endDate = null;
+      this.getAllTour();
+    },
   },
 };
 </script>
@@ -241,5 +301,14 @@ export default {
   display: block;
   border: none;
   border-bottom: 1px solid #c6c6c6;
+}
+.select_gender input {
+  border: none;
+}
+.clear-date {
+  margin-top: -10px;
+  margin-left: 151px;
+
+  position: absolute;
 }
 </style>

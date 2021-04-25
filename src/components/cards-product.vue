@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-for="product in items.slice(0, 3)">
+    <template v-for="product in items.slice(0, number)">
       <mdb-card
         :key="product._id"
         style="width: 20rem;float: left;"
@@ -53,9 +53,16 @@ export default {
     mdbCardText,
     mdbCardBody,
   },
+  props: {
+    typeTravel: Object,
+  },
   data() {
     return {
       items: [],
+      number: null,
+      post: {
+        typesOftourism: null,
+      },
     };
   },
   mounted() {
@@ -66,8 +73,14 @@ export default {
       this.$store.dispatch('addToCart', product);
     },
     getListProduct() {
-      let uri = `${process.env.VUE_APP_PORT}/products`;
-      this.axios.get(uri, this.ticket).then((response) => {
+      // lấy loại tour để gợi ý sản phẩm
+
+      this.post.typesOftourism = this.typeTravel.type;
+      this.number = this.typeTravel.numberProduct;
+      // gọi API get list sản phẩm
+
+      let uri = `${process.env.VUE_APP_PORT}/productByType`;
+      this.axios.post(uri, this.post).then((response) => {
         this.items = response.data.data;
       });
     },

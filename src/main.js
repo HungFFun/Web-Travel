@@ -6,7 +6,7 @@ import router from './router';
 import store from './store';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-
+import Notifications from 'vue-notification';
 require('bootstrap-css-only/css/bootstrap.min.css');
 require('mdbvue/lib/css/mdb.min.css');
 require('@fortawesome/fontawesome-free/css/all.min.css');
@@ -17,6 +17,7 @@ for (const component in mdbvue) {
 }
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
+Vue.use(Notifications);
 
 new Vue({
   router,
