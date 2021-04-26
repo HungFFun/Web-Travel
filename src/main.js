@@ -15,6 +15,7 @@ import * as mdbvue from 'mdbvue';
 for (const component in mdbvue) {
   Vue.component(component, mdbvue[component]);
 }
+
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.use(Notifications);

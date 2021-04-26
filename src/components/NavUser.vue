@@ -66,9 +66,37 @@
 
     <mdb-modal size="lg" :show="modal" @close="modal = false">
       <mdb-modal-header>
-        <mdb-modal-title>Modal title</mdb-modal-title>
+        <mdb-modal-title>Giỏ hàng</mdb-modal-title>
       </mdb-modal-header>
       <mdb-modal-body>
+        <mdb-tbl>
+          <mdb-tbl-head>
+            <tr>
+              <th class="font-weight-bold">#</th>
+              <th class="font-weight-bold">Tour</th>
+              <th class="font-weight-bold">ID Tour</th>
+              <th class="font-weight-bold">Số vé</th>
+              <th class="font-weight-bold">Tiền vé</th>
+            </tr>
+          </mdb-tbl-head>
+
+          <mdb-tbl-body>
+            <tr v-if="tour">
+              <td></td>
+              <td class="text-monospace">
+                <p style="max-width: 300px;">{{ tour.tourName }}</p>
+              </td>
+              <td class="text-monospace">{{ tour.tourId }}</td>
+              <td class="text-monospace">{{ inforBooking.totalPeople }}</td>
+              <td>
+                <span class="font-weight-bold" style="color: red">
+                  {{ inforBooking.totalMoney }}
+                </span>
+              </td>
+            </tr>
+          </mdb-tbl-body>
+        </mdb-tbl>
+        <hr />
         <mdb-tbl>
           <mdb-tbl-head>
             <tr>
@@ -90,18 +118,23 @@
                 >
                 </mdb-card-image>
               </th>
-              <td class="font-weight-normal">{{ product.productName }}</td>
+              <td class="font-weight-normal ">{{ product.productName }}</td>
               <td class="font-weight-normal">
                 {{ formatMoney(product.price) }}
               </td>
               <td class="font-weight-normal">@mdo</td>
               <td class="font-weight-normal">
-                <mdb-btn color="primary" @click="removeFromCart(product)">
+                <mdb-btn
+                  color="primary"
+                  @click="removeFromCart(product)"
+                  style=" border: none !important;font-size: 17px;color: black !important;"
+                >
                   X
                 </mdb-btn>
               </td>
             </tr>
             <tr>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -143,6 +176,9 @@ export default {
       modal: false,
       countCart: 0,
       productCart: [],
+      tour: {},
+      inforBooking: {},
+      numberTicket: 0,
     };
   },
   mounted() {
@@ -157,6 +193,8 @@ export default {
       this.$store.getters.inCart.map((pd) => {
         this.productCart.push(pd);
       });
+      this.tour = this.$store.getters.inTour;
+      this.inforBooking = this.$store.getters.inforBooking;
 
       this.modal = true;
     },

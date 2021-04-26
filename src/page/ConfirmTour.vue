@@ -131,7 +131,7 @@
                   <p class="font-weight-bold">Số khách :</p>
                 </mdb-col>
                 <mdb-col col="8">
-                  <p class="font-weight-bold">Số khách :</p>
+                  <p class="font-weight-bold">{{ inforBooking.totalPeople }}</p>
                 </mdb-col>
               </mdb-row>
               <mdb-row class="mt-3  border-bottom">
@@ -139,7 +139,7 @@
                   <p class="font-weight-bold">Ghi chú :</p>
                 </mdb-col>
                 <mdb-col col="8">
-                  <p class="font-weight-bold">Số khách :</p>
+                  <p class="font-weight-bold">...............</p>
                 </mdb-col>
               </mdb-row>
             </mdb-col>
@@ -204,7 +204,7 @@
               <p class="font-weight-bold">Mã tour :</p>
             </mdb-col>
             <mdb-col col="7">
-              <p class="font-weight-bold">{{ inforBooking.bookId }}</p>
+              <p class="font-weight-bold">{{ tour.tourId }}</p>
             </mdb-col>
           </mdb-row>
         </mdb-col>
@@ -225,6 +225,7 @@
             <th>Họ tên</th>
             <th>Ngày sinh</th>
             <th>Giới tính</th>
+            <th>Lứa tuổi</th>
           </tr>
         </mdb-tbl-head>
 
@@ -234,18 +235,49 @@
             <td>{{ inforAdults.name[index] }}</td>
             <td>{{ inforAdults.birthday[index] }}</td>
             <td>{{ inforAdults.gender[index] }}</td>
+            <td>Người lớn</td>
           </tr>
           <tr v-for="(value, index) in inforChildren.name" :key="index + 5">
             <th>{{ index }}</th>
             <td>{{ inforChildren.name[index] }}</td>
             <td>{{ inforChildren.birthday[index] }}</td>
             <td>{{ inforChildren.gender[index] }}</td>
+            <td>Trẻ Em</td>
           </tr>
           <tr v-for="(value, index) in inforYoung.name" :key="index + 10">
             <th>{{ index }}</th>
             <td>{{ inforYoung.name[index] }}</td>
             <td>{{ inforYoung.birthday[index] }}</td>
             <td>{{ inforYoung.gender[index] }}</td>
+            <td>Em bé</td>
+          </tr>
+        </mdb-tbl-body>
+      </mdb-tbl>
+
+      <!-- Danh sách sản phẩm-->
+
+      <mdb-row class="mt-2 mb-2">
+        <mdb-col cols="12" class="pl-0 text-center">
+          <p class="price-tour">
+            DANH SÁCH SẢN PHẨM
+          </p>
+        </mdb-col>
+      </mdb-row>
+      <mdb-tbl responsive>
+        <mdb-tbl-head>
+          <tr>
+            <th>#</th>
+            <th>SẢN PHẨM</th>
+            <th>GIÁ</th>
+            <th>SỐ LƯƠNG</th>
+          </tr>
+        </mdb-tbl-head>
+
+        <mdb-tbl-body>
+          <tr v-for="(product, index) in productCart" :key="index">
+            <th>{{ index }}</th>
+            <td>{{ product.productName }}</td>
+            <td>{{ product.price }}</td>
           </tr>
         </mdb-tbl-body>
       </mdb-tbl>
@@ -292,11 +324,12 @@ export default {
         phone: null,
         address: null,
       },
-
+      totalPeople: 1,
       inforAdults: null,
       inforChildren: null,
       inforYoung: null,
-      inforBooking: null,
+      inforBooking: { totalPeople: null, tourId: null },
+      productCart: [],
     };
   },
   mounted() {
@@ -310,6 +343,9 @@ export default {
       this.inforChildren = this.$store.getters.inChildren;
       this.inforYoung = this.$store.getters.inYoung;
       this.inforBooking = this.$store.getters.inforBooking;
+      this.$store.getters.inCart.map((pd) => {
+        this.productCart.push(pd);
+      });
     },
     payment() {
       this.$router.push({ name: 'Payment' });

@@ -135,7 +135,7 @@
                   class="form-control form-control-lg"
                   v-model="user.fullName"
                   required="required"
-                  @mouseleave="totalOfPeople()"
+                  @change="totalOfPeople()"
                 />
               </div>
               <div class="form-group font-weight-bold">
@@ -145,6 +145,7 @@
                 <input
                   type="number"
                   id="example1"
+                  min="0"
                   class="form-control form-control-lg"
                   v-model="user.phone"
                   required="required"
@@ -172,7 +173,7 @@
                   type="email"
                   id="example1"
                   class="form-control form-control-lg"
-                  @mouseleave="totalOfPeople()"
+                  @change="totalOfPeople()"
                   v-model="user.email"
                   required="required"
                 />
@@ -193,12 +194,13 @@
                     <input
                       type="number"
                       min="1"
+                      :max="tour.numberTicket"
                       id="numberAdults"
                       ref="numberAdults"
                       class="form-control form-control-lg"
                       v-model="inforBook.numberAdults"
                       required="required"
-                      @mouseleave="totalOfPeople()"
+                      @change="totalOfPeople()"
                     />
                   </div>
                 </mdb-col>
@@ -209,10 +211,10 @@
                       type="number"
                       id="example1"
                       class="form-control form-control-lg"
-                      min="0"
                       v-model="inforBook.numberChildren"
+                      min="0"
                       required="required"
-                      @mouseleave="totalOfPeople()"
+                      @change="totalOfPeople()"
                     />
                   </div>
                 </mdb-col>
@@ -226,7 +228,7 @@
                       min="0"
                       v-model="inforBook.numberYoung"
                       required="required"
-                      @mouseleave="totalOfPeople()"
+                      @change="totalOfPeople()"
                     />
                   </div>
                 </mdb-col>
@@ -238,7 +240,7 @@
                       type="number"
                       id="example1"
                       class="form-control form-control-lg"
-                      v-model="totalPeople"
+                      v-model="inforBook.totalPeople"
                       readonly
                     />
                   </div>
@@ -557,13 +559,13 @@
                   id="defaultGroupExample1"
                   name="groupOfDefaultRadios"
                   v-model="inforBook.payments"
-                  value="1"
+                  value="TIỀN MẶT"
                 />
                 <label class="custom-control-label" for="defaultGroupExample1">
-                  Tiền mặt
+                  TIỀN MẶT
                 </label>
               </div>
-              <div v-if="inforBook.payments === '1'">
+              <div v-if="inforBook.payments === 'TIỀN MẶT'">
                 <p class="ml-4 mt-2">
                   Quý khách vui lòng thanh toán tại bất kỳ văn phòng Banda Fly
                   trên toàn quốc và các chi nhánh ngoài nước. Chi tiết Xin lưu
@@ -579,14 +581,14 @@
                   class="custom-control-input"
                   id="defaultGroupExample2"
                   name="groupOfDefaultRadios"
-                  value="2"
+                  value="CHUYỂN KHOẢN"
                   v-model="inforBook.payments"
                 />
                 <label class="custom-control-label" for="defaultGroupExample2">
-                  Chuyển khoản
+                  CHUYỂN KHOẢN
                 </label>
               </div>
-              <div v-if="inforBook.payments === '2'">
+              <div v-if="inforBook.payments === 'CHUYỂN KHOẢN'">
                 <table
                   border="0"
                   cellpadding="0"
@@ -665,14 +667,14 @@
                   class="custom-control-input"
                   id="defaultGroupExample3"
                   name="groupOfDefaultRadios"
-                  value="3"
+                  value="ATM/Internet Banking"
                   v-model="inforBook.payments"
                 />
                 <label class="custom-control-label" for="defaultGroupExample3">
                   ATM/Internet Banking</label
                 >
               </div>
-              <div v-if="inforBook.payments === '3'">
+              <div v-if="inforBook.payments === 'ATM/Internet Banking'">
                 <div
                   class="frame-cards conditionPament ml-4 mt-2"
                   id="conditionPament9"
@@ -681,12 +683,11 @@
                   <title></title>
 
                   <p align="left">
-                    <strong
-                      ><font color="#fc3400"
-                        >HÌNH THỨC THANH TOÁN BẰNG THẺ ATM/ INTERNET
-                        BANKING</font
-                      ></strong
-                    >
+                    <strong>
+                      <font color="#fc3400">
+                        HÌNH THỨC THANH TOÁN BẰNG THẺ ATM/ INTERNET BANKING
+                      </font>
+                    </strong>
                   </p>
                   <p>
                     Banda Fly chấp nhận thanh toán bằng thẻ ATM qua cổng thanh
@@ -714,14 +715,19 @@
                   class="custom-control-input"
                   id="defaultGroupExample4"
                   name="groupOfDefaultRadios"
-                  value="4"
+                  value="THANH TOÁN BẰNG THẺ TÍN DỤNG VÀ GHI NỢ QUỐC TẾ"
                   v-model="inforBook.payments"
                 />
                 <label class="custom-control-label" for="defaultGroupExample4">
-                  Thanh toán thẻ tín dụng và ghi nợ quốc tế
+                  THANH TOÁN BẰNG THẺ TÍN DỤNG VÀ GHI NỢ QUỐC TẾ
                 </label>
               </div>
-              <div v-if="inforBook.payments === '4'">
+              <div
+                v-if="
+                  inforBook.payments ===
+                    'THANH TOÁN BẰNG THẺ TÍN DỤNG VÀ GHI NỢ QUỐC TẾ'
+                "
+              >
                 <div
                   class="frame-cards conditionPament ml-4 mt-2"
                   id="conditionPament15"
@@ -774,14 +780,19 @@
                   class="custom-control-input"
                   id="defaultGroupExample5"
                   name="groupOfDefaultRadios"
-                  value="5"
+                  value="THANH TOÁN BẰNG THẺ TÍN DỤNG VÀ GHI NỢ QUỐC TẾ"
                   v-model="inforBook.payments"
                 />
                 <label class="custom-control-label" for="defaultGroupExample5">
                   Thanh toán quét mã QRCode
                 </label>
               </div>
-              <div v-if="inforBook.payments === '5'">
+              <div
+                v-if="
+                  inforBook.payments ===
+                    'THANH TOÁN BẰNG THẺ TÍN DỤNG VÀ GHI NỢ QUỐC TẾ'
+                "
+              >
                 <div
                   class="frame-cards conditionPament ml-4 mt-2"
                   id="conditionPament16"
@@ -1210,6 +1221,12 @@
         </mdb-row>
       </form>
 
+      <notifications
+        group="auth"
+        position="bottom top right"
+        closeOnClick
+        class="my-custom-class"
+      />
       <!-- các tour tương tự -->
       <hr />
       <div>
@@ -1242,11 +1259,14 @@ export default {
   components: { NavUser, FooterB, NavPage, CardsTour },
   data() {
     return {
-      value: 2,
+      vm: {
+        searchPlace: '',
+        location: {},
+      },
+      value: 'TIỀN MẶT',
       items: [],
-      totalPeople: null,
       moneyRoom: null,
-      show: true,
+
       tour: {
         priceDetail: {
           adult: null,
@@ -1265,9 +1285,10 @@ export default {
         numberYoung: 0,
         numberClass: 0,
         dateBook: null,
-        payments: '1',
+        payments: 'Tiền mặt',
         totalMoney: null,
         bookId: null,
+        totalPeople: 1,
       },
 
       inforAdults: {
@@ -1290,13 +1311,26 @@ export default {
   },
   mounted() {
     this.findTour();
-    this.totalOfPeople();
+    // this.totalOfPeople();
     this.sumTotalMoney();
   },
   methods: {
+    // thông báo quá số vé còn lại
+    clickTest() {
+      this.$notify({
+        group: 'auth',
+        text: 'Số vé còn lại không đủ',
+        type: 'error',
+      });
+    },
+
+    // tổng tiền
     sumTotalMoney() {
+      // tiền phụ thu phòng riêng
       this.moneyRoom =
         parseInt(this.inforBook.numberClass) * this.tour.surcharge;
+
+      // tổng tiền khi mua vé
       this.inforBook.totalMoney =
         parseInt(this.inforBook.numberAdults) * this.tour.priceDetail.adult +
         parseInt(this.inforBook.numberChildren) *
@@ -1305,18 +1339,23 @@ export default {
           this.tour.priceDetail.underTheAgeOfFive +
         parseInt(this.moneyRoom);
     },
+
     totalOfPeople() {
-      this.totalPeople =
+      // tổng số  vé
+      this.inforBook.totalPeople =
         parseInt(this.inforBook.numberAdults) +
         parseInt(this.inforBook.numberChildren) +
         parseInt(this.inforBook.numberYoung);
-      if (this.totalPeople <= this.tour.numberTicket) {
+
+      // không mua vượt số vé còn trống
+      if (this.inforBook.totalPeople <= this.tour.numberTicket) {
         this.sumTotalMoney();
       } else {
-        this.show = true;
+        this.clickTest();
         this.$refs.numberAdults.focus();
       }
     },
+    // tìm tour được chọn theo ID
     findTour() {
       let uri = `${process.env.VUE_APP_PORT}/tour/${this.$route.params.id}`;
       this.axios.get(uri, this.data).then((response) => {
@@ -1331,9 +1370,12 @@ export default {
         });
       });
     },
+
+    // định dạng ngày
     formatDate(value) {
-      return moment(value).format('MMMM DD YYYY');
+      return moment(value).format('MMMM-DD-YYYY');
     },
+    // định dạng tiền
     formatMoney(money) {
       const formatter = new Intl.NumberFormat('vi', {
         style: 'currency',
@@ -1341,12 +1383,16 @@ export default {
       });
       return formatter.format(money);
     },
+
+    // đẩy dữ liệu vào giỏ hàng
     productSuggestion() {
-      // thêm dữ liệu vào store
+      // random id booking tour
       const dateNow = new Date();
       this.inforBook.dateBook = dateNow;
-      this.inforBook.bookId = dateNow.getMilliseconds();
+      this.inforBook.bookId = this.tour.tourId + '-' + this.formatDate(dateNow);
       //
+      // thêm dữ liệu vào store
+
       this.$store.dispatch('addToTour', this.tour);
       this.$store.dispatch('addToUser', this.user);
       this.$store.dispatch('addTotAdults', this.inforAdults);
@@ -1358,6 +1404,7 @@ export default {
 
       this.$router.push({ name: 'ProductSuggestion' });
     },
+    // set vị trí input
     setFocus() {
       this.form.email.focus(); // don't  work
     },
@@ -1365,7 +1412,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .border-bottom {
   border-width: 1px;
   border-bottom: 1px dashed #ccc;
