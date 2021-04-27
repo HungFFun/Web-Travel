@@ -348,6 +348,18 @@ export default {
       });
     },
     payment() {
+      this.post = this.user;
+      let uri = `${process.env.VUE_APP_PORT}/sentEmail`;
+      this.axios
+        .post(uri, {
+          tour: this.tour,
+          user: this.user,
+          productCart: this.productCart,
+          inforBooking: this.inforBooking,
+        })
+        .then((response) => {
+          console.log(response);
+        });
       this.$router.push({ name: 'Payment' });
     },
     formatDate(value) {

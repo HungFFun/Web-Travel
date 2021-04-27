@@ -1259,11 +1259,6 @@ export default {
   components: { NavUser, FooterB, NavPage, CardsTour },
   data() {
     return {
-      vm: {
-        searchPlace: '',
-        location: {},
-      },
-      value: 'TIỀN MẶT',
       items: [],
       moneyRoom: null,
 
@@ -1285,7 +1280,7 @@ export default {
         numberYoung: 0,
         numberClass: 0,
         dateBook: null,
-        payments: 'Tiền mặt',
+        payments: 'TIỀN MẶT',
         totalMoney: null,
         bookId: null,
         totalPeople: 1,
