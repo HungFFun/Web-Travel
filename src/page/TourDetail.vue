@@ -126,33 +126,48 @@
             <mdb-col col="3">
               <mdb-row>
                 <mdb-col col="12" style="background-color: #f1f1f1;">
-                  <mdb-navbar-nav nav vertical>
-                    <mdb-nav-item href="#" icon="spinner" class="mt-3">
-                      <span class="ml-3 mt-3" style="color: black;">
-                        Chương trình tour
-                      </span>
-                    </mdb-nav-item>
-                    <mdb-nav-item href="#" icon="list-ul" class="mt-2">
-                      <span class="ml-3" style="color: black;">
-                        Chi tiết tour
-                      </span>
-                    </mdb-nav-item>
-                    <mdb-nav-item
-                      href="#"
-                      icon="exclamation-triangle"
-                      class="mt-2"
+                  <mdb-list-group class="list-group-flush  width-list-group ">
+                    <mdb-list-group-item
+                      @click.native="activeItem = 'detail-tour'"
+                      :class="activeItem === 'detail-tour' && 'active'"
                     >
-                      <span class="ml-3" style="color: black;"> Lưu ý </span>
-                    </mdb-nav-item>
-                    <mdb-nav-item href="#" icon="comments" class="mt-2">
-                      <span class="ml-3" style="color: black;">
-                        ý kiến khách hàng
-                      </span>
-                    </mdb-nav-item>
-                    <mdb-nav-item href="#" icon="headset" class="mt-2 mb-3">
-                      <span class="ml-3" style="color: black;"> Liên hệ </span>
-                    </mdb-nav-item>
-                  </mdb-navbar-nav>
+                      <mdb-icon icon="spinner" class="mr-3" />
+                      <span> Chương trình Tour</span>
+                    </mdb-list-group-item>
+                    <mdb-list-group-item
+                      @click.native="activeItem = 'detail'"
+                      :class="activeItem === 'detail' && 'active'"
+                    >
+                      <mdb-icon icon="list-ul" class="mr-3" /> Chi tiêt Tour
+                    </mdb-list-group-item>
+                    <mdb-list-group-item
+                      @click.native="activeItem = 'otherDay'"
+                      :class="activeItem === 'otherDay' && 'active'"
+                    >
+                      <mdb-icon icon="calendar-alt" class="mr-3" />
+                      Ngày khác
+                    </mdb-list-group-item>
+                    <mdb-list-group-item
+                      @click.native="activeItem = 'opinion'"
+                      :class="activeItem === 'opinion' && 'active'"
+                    >
+                      <mdb-icon icon="table" class="mr-3" />
+                      Ý kiến khách hàng
+                    </mdb-list-group-item>
+                    <mdb-list-group-item
+                      @click.native="activeItem = 'note'"
+                      :class="activeItem === 'note' && 'active'"
+                    >
+                      <mdb-icon icon="exclamation-triangle" class="mr-3" /> Lưu
+                      ý
+                    </mdb-list-group-item>
+                    <mdb-list-group-item
+                      @click.native="activeItem = 'active'"
+                      :class="activeItem === 'active' && 'active'"
+                    >
+                      <mdb-icon icon="headset" class="mr-3" /> Liên hệ
+                    </mdb-list-group-item>
+                  </mdb-list-group>
                 </mdb-col>
               </mdb-row>
               <mdb-row style="background-color: #f1f1f1 ;" class="mt-3">
@@ -184,34 +199,80 @@
               </mdb-row>
             </mdb-col>
             <mdb-col style="background: #f1f1f1 ; " class="ml-2">
-              <mdb-row style="background-color: #e1e1e1; height: 55px;">
+              <mdb-row v-if="activeItem === 'detail-tour'">
                 <mdb-col col="12">
-                  <br />
-                  <span class="font-weight-bold ">CHƯƠNG TRÌNH TOUR</span>
+                  <mdb-row style="background-color: #e1e1e1; height: 55px;">
+                    <mdb-col col="12">
+                      <br />
+                      <span class="font-weight-bold ">CHƯƠNG TRÌNH TOUR</span>
+                    </mdb-col>
+                  </mdb-row>
+                  <mdb-container>
+                    <mdb-row
+                      class="mt-2 flex-grow-1 pb-2"
+                      v-for="(value, index) in tour.numDay"
+                      :key="index"
+                    >
+                      <mdb-col
+                        col="3"
+                        class=" text-center  border-right border-danger flex-grow-1"
+                      >
+                        <h3 class="font-weight-bold " style="  color: #ff002d;">
+                          {{ tour.numDay[index] }}
+                        </h3>
+                        <span class="font-weight-bold ">
+                          {{ formatDate(tour.startDate) }}
+                        </span>
+                      </mdb-col>
+                      <mdb-col col="9">
+                        <p v-html="tour.detail[index]"></p>
+                      </mdb-col>
+                    </mdb-row>
+                  </mdb-container>
                 </mdb-col>
               </mdb-row>
-              <mdb-container>
-                <mdb-row
-                  class="mt-2 flex-grow-1 pb-2"
-                  v-for="(value, index) in tour.numDay"
-                  :key="index"
-                >
-                  <mdb-col
-                    col="3"
-                    class=" text-center  border-right border-danger flex-grow-1"
-                  >
-                    <h3 class="font-weight-bold " style="  color: #ff002d;">
-                      {{ tour.numDay[index] }}
-                    </h3>
-                    <span class="font-weight-bold ">
-                      {{ formatDate(tour.startDate) }}
-                    </span>
-                  </mdb-col>
-                  <mdb-col col="9">
-                    <p v-html="tour.detail[index]"></p>
-                  </mdb-col>
-                </mdb-row>
-              </mdb-container>
+              <mdb-row v-if="activeItem === 'detail'">
+                <mdb-col col="12">
+                  <infor-tour-detail></infor-tour-detail>
+                </mdb-col>
+              </mdb-row>
+              <mdb-row v-if="activeItem === 'otherDay'">
+                <mdb-col col="12">
+                  <infor-tour-detail></infor-tour-detail>
+                </mdb-col>
+              </mdb-row>
+              <mdb-row v-if="activeItem === 'opinion'">
+                <mdb-col col="12">
+                  <infor-tour-detail></infor-tour-detail>
+                </mdb-col>
+              </mdb-row>
+              <mdb-row v-if="activeItem === 'note'">
+                <mdb-col col="12">
+                  <note></note>
+                </mdb-col>
+              </mdb-row>
+              <mdb-row v-if="activeItem === 'active'">
+                <mdb-col col="12">
+                  <div class="row vpc">
+                    <div class="col-xs-12 title">
+                      Trụ sở chính
+                    </div>
+                    <div class="col-sm-6 col-xs-12 mg-bot30">
+                      <p class="address mg-bot10">
+                        <strong>Địa chỉ: </strong> 190 Pasteur, Phường Võ Thị
+                        Sáu, Quận 3, Tp. Hồ Chí Minh
+                      </p>
+                      <p class="mg-bot10">
+                        <strong>Điện thoại:</strong> (84-28) 3822 8898
+                      </p>
+                      <p class="mg-bot10">
+                        <strong>Fax:</strong> (84-28) 3829 9142
+                      </p>
+                      <p><strong>Email:</strong> info@vietravel.com</p>
+                    </div>
+                  </div>
+                </mdb-col>
+              </mdb-row>
             </mdb-col>
           </mdb-row>
         </mdb-col>
@@ -227,7 +288,7 @@
       </mdb-row>
       <mdb-row>
         <mdb-col cols="12">
-          <cards-tour></cards-tour>
+          <cards-tour v-bind:numberTour="3"></cards-tour>
         </mdb-col>
       </mdb-row>
     </mdb-container>
@@ -243,6 +304,8 @@ import NavB from '../components/NavUser.vue';
 import moment from 'moment';
 
 import { mdbRating } from 'mdbvue';
+import InforTourDetail from '../components/InforTourDetail.vue';
+import Note from '../components/Note.vue';
 export default {
   components: {
     NavB,
@@ -250,6 +313,8 @@ export default {
     CardsTour,
     NavPage,
     mdbRating,
+    InforTourDetail,
+    Note,
   },
   data() {
     return {
@@ -260,12 +325,16 @@ export default {
       },
       value: 2,
       items: [],
+      activeItem: 'detail-tour',
     };
   },
   mounted() {
     this.findTour();
   },
   methods: {
+    beforeMount() {
+      this.activeItem = this.$route.name;
+    },
     bookTour(idTour) {
       this.$router.push({ name: 'BookTour', params: { id: idTour } });
     },
@@ -310,5 +379,25 @@ export default {
 }
 .rating-icon {
   margin-left: -8px !important;
+}
+.justify-content-between {
+  justify-content: normal !important;
+}
+.width-list-group {
+  width: 284px;
+  margin-left: -15px;
+}
+.list-group-item {
+  background-color: #f1f1f1;
+}
+</style>
+<style scoped>
+.list-group-item {
+  display: block !important;
+  transition: background-color 0.3s;
+}
+.list-group .active {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 5px;
 }
 </style>

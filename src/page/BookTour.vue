@@ -1243,9 +1243,8 @@
           </mdb-col>
         </mdb-row>
       </div>
-
-      <footer-b></footer-b>
     </mdb-container>
+    <footer-b></footer-b>
   </div>
 </template>
 
