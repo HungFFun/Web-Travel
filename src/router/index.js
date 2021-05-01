@@ -7,6 +7,7 @@ import ListTour from '../page/ListTour.vue';
 import ProductSuggestion from '../page/ProductSuggestion.vue';
 import Confirm from '../page/ConfirmTour.vue';
 import Payment from '../page/Payment.vue';
+import Login from '../page/Login.vue';
 
 Vue.use(Router);
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/Payment',
       name: 'Payment',
       component: Payment,
+    },
+    {
+      path: '/Login',
+      name: 'Login',
+      component: Login,
     },
   ],
 });

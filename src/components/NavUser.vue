@@ -2,16 +2,15 @@
   <div>
     <mdb-navbar position="top" dark transparent scrolling>
       <mdb-navbar-brand href="#">
-        <span style="color:black"> Banda Fly</span></mdb-navbar-brand
-      >
+        <router-link to="/">
+          <span style="color:black"> Banda Fly</span>
+        </router-link>
+      </mdb-navbar-brand>
       <mdb-navbar-toggler>
         <mdb-navbar-nav right>
           <mdb-nav-item href="#" waves-fixed class="mr-3 pr-4 border-right">
             <router-link to="/">
-              <span
-                style="color:black ;font-size: 22px; "
-                class="font-weight-bold"
-              >
+              <span style="color:black ; " class="font-weight-bold">
                 Home
               </span>
             </router-link>
@@ -20,26 +19,42 @@
           <mdb-nav-item waves-fixed class="mr-3 pr-3 pl-2 border-right">
             <mdb-icon
               icon="cart-plus"
-              size="2x"
+              size="1x"
               class="black-text pr-3"
               aria-hidden="true"
               @click.native="loadData()"
             />
           </mdb-nav-item>
-          <mdb-nav-item href="#" waves-fixed class="mr-3 pr-3 pl-3 ">
-            <mdb-icon
+
+          <mdb-dropdown tag="li" class="nav-item">
+            <mdb-dropdown-toggle
               icon="user-circle"
-              size="2x"
-              class="black-text pr-3"
-              aria-hidden="true"
-            />
-          </mdb-nav-item>
+              tag="a"
+              navLink
+              slot="toggle"
+              waves-fixed
+            ></mdb-dropdown-toggle>
+            <mdb-dropdown-menu>
+              <mdb-dropdown-item v-on:click="toLoginPage()">
+                Đăng nhập
+              </mdb-dropdown-item>
+              <mdb-dropdown-item>Đăng ký tài khoản</mdb-dropdown-item>
+              <div class="dropdown-divider"></div>
+              <mdb-dropdown-item>Đăng xuất</mdb-dropdown-item>
+            </mdb-dropdown-menu>
+          </mdb-dropdown>
           <div class="count-card  backgroud-count-cart text-center">
-            <span class="font-weight-bold ">{{ countCart }}</span>
+            <span
+              class="font-weight-bold text-center"
+              style=" font-size: 13px;"
+              >{{ countCart }}</span
+            >
           </div>
         </mdb-navbar-nav>
       </mdb-navbar-toggler>
     </mdb-navbar>
+
+    <!-- nền  -->
     <div v-if="getUrl() === 'HelloWorld'" style="height: 105vh">
       <div class="view intro-2" style="height: 100vh">
         <div class="full-bg-img">
@@ -63,7 +78,7 @@
         </div>
       </div>
     </div>
-
+    <!-- giở hang  -->
     <mdb-modal size="lg" :show="modal" @close="modal = false">
       <mdb-modal-header>
         <mdb-modal-title>Giỏ hàng</mdb-modal-title>
@@ -174,7 +189,7 @@ export default {
   data() {
     return {
       modal: false,
-      countCart: 0,
+      countCart: 10,
       productCart: [],
       tour: {},
       inforBooking: {},
@@ -185,6 +200,9 @@ export default {
     this.getUrl();
   },
   methods: {
+    toLoginPage() {
+      this.$router.push({ name: 'Login' });
+    },
     getUrl() {
       return this.$route.name;
     },
@@ -214,15 +232,22 @@ export default {
 </script>
 <style>
 .count-card {
-  margin-top: 0px;
-  margin-left: 158px;
+  margin-top: 5px;
+  margin-left: 140px;
+
   position: absolute;
 }
 .backgroud-count-cart {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border-radius: 47%;
   background-color: red;
+}
+.user-login {
+  margin-top: 5px;
+  margin-left: 140px;
+
+  position: absolute;
 }
 .view {
   background: url('https://images.unsplash.com/photo-1547906250-5bdf142c606d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1399&q=80')
@@ -233,5 +258,8 @@ export default {
 
 .navbar .dropdown-menu a:hover {
   color: inherit !important;
+}
+.nav-link {
+  color: #212529 !important;
 }
 </style>

@@ -360,8 +360,6 @@ export default {
       let uri = `${process.env.VUE_APP_PORT}/tour/${this.$route.params.id}`;
       this.axios.get(uri, this.data).then((response) => {
         this.tour = response.data.data;
-        console.log(this.tour);
-
         // Lấy hình
         this.tour.listImage.forEach((img) => {
           const a = {
