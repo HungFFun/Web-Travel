@@ -1221,6 +1221,7 @@
         </mdb-row>
       </form>
 
+      <!-- thông báo  -->
       <notifications
         group="auth"
         position="bottom top right"

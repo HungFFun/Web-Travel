@@ -454,12 +454,6 @@ export default {
   width: 22rem;
   height: 26rem;
 }
-/* .rounded,
-.dot {
-  margin-top: -1rem;
-  margin-left: 15rem;
-  position: absolute;
-} */
 
 .why {
   margin-top: -16rem;

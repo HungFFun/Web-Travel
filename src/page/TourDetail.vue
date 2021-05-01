@@ -18,7 +18,7 @@
           <template>
             <mdb-carousel
               slide
-              :interval="8000"
+              :interval="4000"
               :items="items"
               indicators
             ></mdb-carousel>
@@ -119,7 +119,7 @@
           </mdb-row>
         </mdb-col>
       </mdb-row>
-
+      <!-- chương trình tour - chi tiết tour -  lứu ý - liên hệ  -->
       <mdb-row class="mt-4">
         <mdb-col col="12">
           <mdb-row>
@@ -209,20 +209,25 @@
                   </mdb-row>
                   <mdb-container>
                     <mdb-row
-                      class="mt-2 flex-grow-1 pb-2"
+                      class="mt-4 flex-grow-1 pb-2 text-center "
                       v-for="(value, index) in tour.numDay"
                       :key="index"
                     >
                       <mdb-col
                         col="3"
-                        class=" text-center  border-right border-danger flex-grow-1"
+                        class="d-flex align-items-center  border-right border-danger flex-grow-1"
                       >
-                        <h3 class="font-weight-bold " style="  color: #ff002d;">
-                          {{ tour.numDay[index] }}
-                        </h3>
-                        <span class="font-weight-bold ">
-                          {{ formatDate(tour.startDate) }}
-                        </span>
+                        <div>
+                          <h3
+                            class="font-weight-bold "
+                            style="  color: #ff002d;"
+                          >
+                            {{ tour.numDay[index] }}
+                          </h3>
+                          <span class="font-weight-bold ">
+                            {{ formatDate(tour.startDate) }}
+                          </span>
+                        </div>
                       </mdb-col>
                       <mdb-col col="9">
                         <p v-html="tour.detail[index]"></p>
@@ -233,17 +238,17 @@
               </mdb-row>
               <mdb-row v-if="activeItem === 'detail'">
                 <mdb-col col="12">
-                  <infor-tour-detail></infor-tour-detail>
+                  <infor-tour-detail v-bind:tour="tour"></infor-tour-detail>
                 </mdb-col>
               </mdb-row>
               <mdb-row v-if="activeItem === 'otherDay'">
                 <mdb-col col="12">
-                  <infor-tour-detail></infor-tour-detail>
+                  <calendar-tour></calendar-tour>
                 </mdb-col>
               </mdb-row>
               <mdb-row v-if="activeItem === 'opinion'">
                 <mdb-col col="12">
-                  <infor-tour-detail></infor-tour-detail>
+                  <comment-tour></comment-tour>
                 </mdb-col>
               </mdb-row>
               <mdb-row v-if="activeItem === 'note'">
@@ -253,12 +258,18 @@
               </mdb-row>
               <mdb-row v-if="activeItem === 'active'">
                 <mdb-col col="12">
-                  <div class="row vpc">
-                    <div class="col-xs-12 title">
+                  <mdb-row style="background-color: #e1e1e1; height: 55px;">
+                    <mdb-col col="12">
+                      <br />
+                      <span class="font-weight-bold p-3 ">LỨU Ý</span>
+                    </mdb-col>
+                  </mdb-row>
+                  <mdb-container class="p-3">
+                    <div class="form-title ">
                       Trụ sở chính
                     </div>
-                    <div class="col-sm-6 col-xs-12 mg-bot30">
-                      <p class="address mg-bot10">
+                    <div>
+                      <p>
                         <strong>Địa chỉ: </strong> 190 Pasteur, Phường Võ Thị
                         Sáu, Quận 3, Tp. Hồ Chí Minh
                       </p>
@@ -270,27 +281,29 @@
                       </p>
                       <p><strong>Email:</strong> info@vietravel.com</p>
                     </div>
-                  </div>
+                  </mdb-container>
                 </mdb-col>
               </mdb-row>
             </mdb-col>
           </mdb-row>
         </mdb-col>
       </mdb-row>
-
+      <!-- các tour tưởng tự  -->
       <hr />
-      <mdb-row class="mb-3">
-        <mdb-col cols="12">
-          <b>
-            <span>Các tour tương tự</span>
-          </b>
-        </mdb-col>
-      </mdb-row>
-      <mdb-row>
-        <mdb-col cols="12">
-          <cards-tour v-bind:numberTour="3"></cards-tour>
-        </mdb-col>
-      </mdb-row>
+      <div>
+        <mdb-row class="mb-3">
+          <mdb-col cols="12">
+            <b>
+              <span>Các tour tương tự</span>
+            </b>
+          </mdb-col>
+        </mdb-row>
+        <mdb-row>
+          <mdb-col cols="12">
+            <cards-tour v-bind:numberTour="3"></cards-tour>
+          </mdb-col>
+        </mdb-row>
+      </div>
     </mdb-container>
     <footer-b></footer-b>
   </div>
@@ -306,6 +319,8 @@ import moment from 'moment';
 import { mdbRating } from 'mdbvue';
 import InforTourDetail from '../components/InforTourDetail.vue';
 import Note from '../components/Note.vue';
+import CalendarTour from '../components/Calendar-tour.vue';
+import CommentTour from '../components/comment-tour.vue';
 export default {
   components: {
     NavB,
@@ -315,6 +330,8 @@ export default {
     mdbRating,
     InforTourDetail,
     Note,
+    CalendarTour,
+    CommentTour,
   },
   data() {
     return {
@@ -343,6 +360,8 @@ export default {
       let uri = `${process.env.VUE_APP_PORT}/tour/${this.$route.params.id}`;
       this.axios.get(uri, this.data).then((response) => {
         this.tour = response.data.data;
+        console.log(this.tour);
+
         // Lấy hình
         this.tour.listImage.forEach((img) => {
           const a = {
