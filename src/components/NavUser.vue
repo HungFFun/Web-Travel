@@ -55,7 +55,7 @@
     </mdb-navbar>
 
     <!-- nền  -->
-    <div v-if="getUrl() === 'HelloWorld'" style="height: 105vh">
+    <div v-if="getUrl() === 'Home'" style="height: 105vh">
       <div class="view intro-2" style="height: 100vh">
         <div class="full-bg-img">
           <div class="mask ">

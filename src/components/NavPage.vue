@@ -42,7 +42,7 @@ export default {
   methods: {
     home() {
       console.log('A');
-      this.$router.push({ name: 'HelloWorld' });
+      this.$router.push({ name: 'Home' });
     },
   },
 };

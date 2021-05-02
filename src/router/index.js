@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import HelloWorld from '../page/HelloWorld.vue';
+import Home from '../page/Home.vue';
 import TourDetail from '../page/TourDetail.vue';
 import BookTour from '../page/BookTour.vue';
 import ListTour from '../page/ListTour.vue';
@@ -15,8 +15,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld,
+      name: 'Home',
+      component: Home,
     },
     {
       path: '/detail-tour/:id',
