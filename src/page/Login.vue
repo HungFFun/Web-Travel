@@ -194,20 +194,23 @@
               </mdb-row>
               <mdb-row class="mt-2">
                 <mdb-col col="12" class="text-center">
-                  <div
-                    class="fb-login-button ml-1"
-                    data-width="430px"
-                    data-size="large"
-                    data-button-type="login_with"
-                    data-layout="default"
-                    data-auto-logout-link="false"
-                    data-use-continue-as="false"
-                    scope="public_profile,email"
-                    onlogin="checkLoginState();"
-                  ></div>
-
                   <br />
-                  <mdb-btn outline="primary" style="width: 100%;">
+
+                  <mdb-btn
+                    color="primary"
+                    class="mb-2 btn-facebook "
+                    style="width: 100%;"
+                    v-on:click="loginFacebook()"
+                  >
+                    <mdb-icon fab icon="facebook-square" class="mr-3" />
+                    Đăng nhập quá Facebook
+                  </mdb-btn>
+
+                  <mdb-btn
+                    outline="primary"
+                    style="width: 100%;"
+                    v-on:click="loginGoogle()"
+                  >
                     <mdb-icon fab icon="google-plus-g" class="mr-3" />
 
                     Đăng nhập quá Google
@@ -251,6 +254,7 @@
 
 <script>
 import NavUser from '../components/NavUser.vue';
+import firebase from 'firebase';
 export default {
   components: { NavUser },
   data() {
@@ -269,20 +273,19 @@ export default {
       },
     };
   },
-  mounted() {
-    window.checkLoginState = this.checkLoginState;
-  },
+  mounted() {},
   methods: {
     loginWithFacebook() {
       window.FB.login((response) => {
         console.log('fb response', response);
       }, this.params);
     },
-    checkLoginState: function() {
+    checkLoginState() {
+      console.log('a');
       /*global FB*/
       FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
-          var url = '/me?fields=name,email';
+          var url = '/me?fields=name,email,birthday';
           FB.api(url, function(response) {
             console.log(response);
           });
@@ -313,6 +316,62 @@ export default {
           this.$router.push({ name: 'Home' });
         }
       });
+    },
+    loginFacebook() {
+      var provider = new firebase.auth.FacebookAuthProvider();
+
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          /** @type {firebase.auth.OAuthCredential} */
+          var credential = result.credential;
+
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token = credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+          console.log(user.displayName);
+          // ...
+        })
+        .catch((error) => {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
+          // ...
+        });
+    },
+
+    loginGoogle() {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          /** @type {firebase.auth.OAuthCredential} */
+          var credential = result.credential;
+
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token = credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+          console.log(user.displayName);
+          // ...
+        })
+        .catch((error) => {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
+          // ...
+        });
     },
   },
 };
