@@ -29,6 +29,8 @@ Vue.use(VueEditor);
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.use(Notifications);
+import { initFbsdk } from '@/config/fb.js';
+Vue.use(initFbsdk);
 
 new Vue({
   router,

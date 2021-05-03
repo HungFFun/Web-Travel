@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div id="fb-root"></div>
     <nav-user></nav-user>
     <mdb-container style="padding-top: 36px" class="mb-5 ">
       <mdb-row>
@@ -193,14 +194,18 @@
               </mdb-row>
               <mdb-row class="mt-2">
                 <mdb-col col="12" class="text-center">
-                  <mdb-btn
-                    color="primary"
-                    class="mb-2 btn-facebook "
-                    style="width: 100%;"
-                  >
-                    <mdb-icon fab icon="facebook-square" class="mr-3" />
-                    Đăng nhập quá Facebook
-                  </mdb-btn>
+                  <div
+                    class="fb-login-button ml-1"
+                    data-width="430px"
+                    data-size="large"
+                    data-button-type="login_with"
+                    data-layout="default"
+                    data-auto-logout-link="false"
+                    data-use-continue-as="false"
+                    scope="public_profile,email"
+                    onlogin="checkLoginState();"
+                  ></div>
+
                   <br />
                   <mdb-btn outline="primary" style="width: 100%;">
                     <mdb-icon fab icon="google-plus-g" class="mr-3" />
@@ -236,6 +241,14 @@
   </div>
 </template>
 
+<script
+  async
+  defer
+  crossorigin="anonymous"
+  src="http://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0&appId=296689358726495&autoLogAppEvents=1"
+  nonce="mH9YCUQa"
+></script>
+
 <script>
 import NavUser from '../components/NavUser.vue';
 export default {
@@ -256,7 +269,27 @@ export default {
       },
     };
   },
+  mounted() {
+    window.checkLoginState = this.checkLoginState;
+  },
   methods: {
+    loginWithFacebook() {
+      window.FB.login((response) => {
+        console.log('fb response', response);
+      }, this.params);
+    },
+    checkLoginState: function() {
+      /*global FB*/
+      FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          var url = '/me?fields=name,email';
+          FB.api(url, function(response) {
+            console.log(response);
+          });
+        }
+      });
+    },
+
     notifications(message) {
       this.$notify({
         group: 'auth',
