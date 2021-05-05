@@ -1302,14 +1302,27 @@ export default {
         birthday: [],
         gender: [],
       },
+      // user login
+      post: { token: null },
     };
   },
   mounted() {
     this.findTour();
     // this.totalOfPeople();
     this.sumTotalMoney();
+    this.userLogin();
   },
   methods: {
+    userLogin() {
+      this.post.token = JSON.parse(localStorage.getItem('token'));
+      if (this.post.token !== null) {
+        let uri = `${process.env.VUE_APP_PORT}/account/profile`;
+        this.axios.post(uri, this.post).then((response) => {
+          this.user = response.data;
+        });
+      }
+    },
+
     // thông báo quá số vé còn lại
     clickTest() {
       this.$notify({
@@ -1334,7 +1347,7 @@ export default {
           this.tour.priceDetail.underTheAgeOfFive +
         parseInt(this.moneyRoom);
     },
-
+    // tổng số người
     totalOfPeople() {
       // tổng số  vé
       this.inforBook.totalPeople =
@@ -1365,7 +1378,6 @@ export default {
         });
       });
     },
-
     // định dạng ngày
     formatDate(value) {
       return moment(value).format('MMMM-DD-YYYY');
@@ -1401,7 +1413,7 @@ export default {
     },
     // set vị trí input
     setFocus() {
-      this.form.email.focus(); 
+      this.form.email.focus();
     },
   },
 };

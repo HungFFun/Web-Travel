@@ -143,7 +143,7 @@
               <th class="font-weight-bold">Sản phảm</th>
               <th class="font-weight-bold">Giá</th>
               <th class="font-weight-bold">Số lượng</th>
-              <th class="font-weight-bold">Action</th>
+              <th class="font-weight-bold">Tông tiền</th>
             </tr>
           </mdb-tbl-head>
 
@@ -153,35 +153,33 @@
                 <mdb-card-image
                   :src="product.image"
                   alt="Card image cap"
-                  style="width: 143px;"
+                  style="width: 100px;"
                 >
                 </mdb-card-image>
               </th>
               <td class="font-weight-normal ">{{ product.productName }}</td>
-              <td class="font-weight-normal">
-                {{ formatMoney(product.price) }}
+              <td class="font-weight-normal ">
+                <span class="font-weight-bold" style="color: red">
+                  {{ formatMoney(product.price) }}
+                </span>
               </td>
-              <td class="font-weight-normal">@mdo</td>
-              <td class="font-weight-normal">
-                <mdb-btn
-                  color="primary"
-                  @click="removeFromCart(product)"
-                  style=" border: none !important;font-size: 17px;color: black !important;"
-                >
-                  X
-                </mdb-btn>
+              <td class="font-weight-normal ">
+                <input
+                  type="number"
+                  class="form-control text-center   "
+                  name=""
+                  id=""
+                  min="0"
+                  max="10"
+                  style="width: 63px;"
+                  v-model="product.quantity"
+                  @change="totalMoney(product.quantity, product)"
+                />
               </td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-
               <td>
                 <span class="font-weight-bold" style="color: red">
-                  {{ formatMoney(10000) }}
-                </span>
+                  {{ formatMoney(totalMoney(product.quantity, product)) }}</span
+                >
               </td>
             </tr>
           </mdb-tbl-body>
@@ -189,7 +187,6 @@
       </mdb-modal-body>
       <mdb-modal-footer>
         <mdb-btn color="secondary" @click.native="modal = false">Close</mdb-btn>
-        <mdb-btn color="primary">Save changes</mdb-btn>
       </mdb-modal-footer>
     </mdb-modal>
   </div>
@@ -231,12 +228,20 @@ export default {
   },
 
   methods: {
+    totalMoney(quality, product) {
+      if (quality == 0) {
+        this.$store.dispatch('removeFromCart', product);
+        this.productCart.splice(this.productCart.indexOf(product), 1);
+      } else {
+        return quality * product.price;
+      }
+    },
     getUserLogin() {
       this.post.token = JSON.parse(localStorage.getItem('token'));
       if (this.post.token !== null) {
         let uri = `${process.env.VUE_APP_PORT}/account/profile`;
         this.axios.post(uri, this.post).then((response) => {
-          this.userLogin = response.data[0];
+          this.userLogin = response.data;
         });
       }
     },
@@ -306,5 +311,9 @@ export default {
 }
 .nav-link {
   color: #212529 !important;
+}
+.table td,
+.table th {
+  vertical-align: initial !important;
 }
 </style>

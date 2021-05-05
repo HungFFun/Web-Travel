@@ -22,6 +22,10 @@ export default new Vuex.Store({
     inChildren: (state) => state.inforChildren,
     inYoung: (state) => state.inforYoung,
     inforBooking: (state) => state.inforBooking,
+
+    getProductById: (state) => (id) => {
+      return state.inCart.find((product) => product.id === id);
+    },
   },
   mutations: {
     // thông tin booking
@@ -56,8 +60,16 @@ export default new Vuex.Store({
 
     // sản phẩm trong gior
     ADD_TO_CART(state, product) {
-      state.inCart.push(product);
+      const productFind = state.inCart.find(
+        (productInCart) => productInCart._id === product._id
+      );
+      if (productFind !== undefined) {
+        productFind.quantity += 1;
+      } else {
+        state.inCart.push(product);
+      }
     },
+
     REMOVE_FROM_CART(state, product) {
       state.inCart.splice(product, 1);
     },

@@ -60,6 +60,7 @@ export default {
     return {
       items: [],
       number: null,
+
       post: {
         typesOftourism: null,
       },
@@ -70,6 +71,7 @@ export default {
   },
   methods: {
     addCart(product) {
+      product.quantity = 1;
       this.$store.dispatch('addToCart', product);
     },
     getListProduct() {
@@ -81,7 +83,7 @@ export default {
 
       let uri = `${process.env.VUE_APP_PORT}/productByType`;
       this.axios.post(uri, this.post).then((response) => {
-        this.items = response.data.data;
+        this.items = response.data;
       });
     },
     formatMoney(money) {

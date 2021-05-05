@@ -170,7 +170,9 @@
               <p class="font-weight-bold">TRỊ GIÁ :</p>
             </mdb-col>
             <mdb-col col="7">
-              <p class="font-weight-bold">{{ inforBooking.totalMoney }}</p>
+              <p class="font-weight-bold">
+                {{ formatMoney(inforBooking.totalMoney) }}
+              </p>
             </mdb-col>
           </mdb-row>
           <mdb-row class="mt-3  border-bottom">
