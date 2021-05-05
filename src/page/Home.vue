@@ -446,7 +446,7 @@ export default {
   background-color: #f1f1f1;
   border-radius: 5px;
   margin-top: -1rem;
-  margin-left: 28rem;
+  margin-left: 26rem;
 }
 .img {
   margin-left: -21px;

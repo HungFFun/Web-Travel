@@ -3,7 +3,7 @@
     <mdb-navbar position="top" dark transparent scrolling>
       <mdb-navbar-brand href="#">
         <router-link to="/">
-          <span style="color:black"> Banda Fly</span>
+          <span class="font-weight-bold" style="color:black"> BANDA FLY</span>
         </router-link>
       </mdb-navbar-brand>
       <mdb-navbar-toggler>
@@ -26,21 +26,45 @@
             />
           </mdb-nav-item>
 
-          <mdb-dropdown tag="li" class="nav-item">
+          <mdb-dropdown
+            v-if="userLogin.fullName !== null"
+            tag="li"
+            class="nav-item"
+          >
             <mdb-dropdown-toggle
               icon="user-circle"
               tag="a"
               navLink
               slot="toggle"
               waves-fixed
-            ></mdb-dropdown-toggle>
+            >
+              {{ userLogin.fullName }}
+            </mdb-dropdown-toggle>
+            <mdb-dropdown-menu>
+              <mdb-dropdown-item v-on:click="toLoginPage()">
+                Thông tin tài khoản
+              </mdb-dropdown-item>
+
+              <div class="dropdown-divider"></div>
+              <mdb-dropdown-item v-on:click="logOut()">
+                Đăng xuất
+              </mdb-dropdown-item>
+            </mdb-dropdown-menu>
+          </mdb-dropdown>
+
+          <mdb-dropdown v-else tag="li" class="nav-item">
+            <mdb-dropdown-toggle
+              icon="user-circle"
+              tag="a"
+              navLink
+              slot="toggle"
+              waves-fixed
+            >
+            </mdb-dropdown-toggle>
             <mdb-dropdown-menu>
               <mdb-dropdown-item v-on:click="toLoginPage()">
                 Đăng nhập
               </mdb-dropdown-item>
-              <mdb-dropdown-item>Đăng ký tài khoản</mdb-dropdown-item>
-              <div class="dropdown-divider"></div>
-              <mdb-dropdown-item>Đăng xuất</mdb-dropdown-item>
             </mdb-dropdown-menu>
           </mdb-dropdown>
           <div class="count-card  backgroud-count-cart text-center">
@@ -194,12 +218,33 @@ export default {
       tour: {},
       inforBooking: {},
       numberTicket: 0,
+      post: { token: null },
+
+      userLogin: {
+        fullName: null,
+      },
     };
   },
   mounted() {
     this.getUrl();
+    this.getUserLogin();
   },
+
   methods: {
+    getUserLogin() {
+      this.post.token = JSON.parse(localStorage.getItem('token'));
+      if (this.post.token !== null) {
+        let uri = `${process.env.VUE_APP_PORT}/account/profile`;
+        this.axios.post(uri, this.post).then((response) => {
+          this.userLogin = response.data[0];
+        });
+      }
+    },
+    logOut() {
+      localStorage.removeItem('token');
+      this.$router.go(this.$router.currentRoute);
+    },
+
     toLoginPage() {
       this.$router.push({ name: 'Login' });
     },

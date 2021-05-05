@@ -7,6 +7,8 @@ import store from './store';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import Notifications from 'vue-notification';
+import firebase from 'firebase';
+
 require('bootstrap-css-only/css/bootstrap.min.css');
 require('mdbvue/lib/css/mdb.min.css');
 require('@fortawesome/fontawesome-free/css/all.min.css');
@@ -29,11 +31,7 @@ Vue.use(VueEditor);
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.use(Notifications);
-// có thẻ bỏ
-import { initFbsdk } from '@/config/fb.js';
-Vue.use(initFbsdk);
-// --------
-import firebase from 'firebase';
+
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: 'AIzaSyBSZx5HXGfL5wW7XzEtqwvsHLe6G2w845c',
@@ -45,6 +43,10 @@ const firebaseConfig = {
   measurementId: 'G-Z2F733NV5W',
 };
 firebase.initializeApp(firebaseConfig);
+
+// validate
+import Vuelidate from 'vuelidate';
+Vue.use(Vuelidate);
 
 new Vue({
   router,

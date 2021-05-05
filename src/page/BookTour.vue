@@ -1401,7 +1401,7 @@ export default {
     },
     // set vị trí input
     setFocus() {
-      this.form.email.focus(); // don't  work
+      this.form.email.focus(); 
     },
   },
 };
