@@ -104,10 +104,12 @@
               <select
                 class="browser-default custom-select select_gender "
                 style="height:48px"
+                v-model="post.numberTicket"
+                v-on:change="getAllTour()"
               >
                 <option value="null"> -- Còn chỗ -- </option>
-                <option value="1">Trên 5 vé</option>
-                <option value="2">Trên 10 vé</option>
+                <option value="5">Trên 5 vé</option>
+                <option value="10">Trên 10 vé</option>
               </select>
             </td>
             <td class="font-weight-bold" style="padding-top: 29px;">
@@ -195,7 +197,7 @@
                     }}</span>
                     <br />
                     <span class="text-monospace">
-                      {{ tour.numberOfParticipants }}
+                      {{ tour.numberTicket }}
                     </span>
                   </mdb-col>
                 </mdb-row>
@@ -241,6 +243,7 @@ export default {
         endDate: null,
         adult: null,
         startDate: null,
+        numberTicket: null,
       },
     };
   },
@@ -258,10 +261,13 @@ export default {
       if (this.post.adult === 'null') {
         this.post.adult = null;
       }
+      if (this.post.numberTicket === 'null') {
+        this.post.numberTicket = null;
+      }
 
       let uri = `${process.env.VUE_APP_PORT}/tours/keyword`;
       this.axios.post(uri, this.post).then((response) => {
-        this.items = response.data.data;
+        this.items = response.data;
       });
     },
 

@@ -35,7 +35,7 @@
                   <span> Số vé:</span>
                 </mdb-col>
                 <mdb-col col="6" class="pl-0">
-                  <span> {{ tour.numberOfParticipants }} vé </span>
+                  <span> {{ tour.numberTicket }} vé </span>
                 </mdb-col>
               </mdb-row>
 
@@ -106,7 +106,7 @@ export default {
     getAllTour() {
       let uri = `${process.env.VUE_APP_PORT}/tours`;
       this.axios.get(uri, this.ticket).then((response) => {
-        this.items = response.data.data;
+        this.items = response.data;
       });
     },
 
@@ -115,6 +115,7 @@ export default {
     },
     detail(idTour) {
       this.$router.push({ name: 'TourDetail', params: { id: idTour } });
+      this.$router.go(0);
     },
   },
 };

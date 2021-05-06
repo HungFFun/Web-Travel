@@ -128,7 +128,7 @@
               </mdb-row>
               <mdb-row class="mt-3  border-bottom">
                 <mdb-col col="3">
-                  <p class="font-weight-bold">Số khách :</p>
+                  <p class="font-weight-bold">Số vé :</p>
                 </mdb-col>
                 <mdb-col col="8">
                   <p class="font-weight-bold">{{ inforBooking.totalPeople }}</p>
@@ -199,14 +199,6 @@
               <p class="font-weight-bold">
                 Booking của quý khách đã được chúng tôi xác nhận thành công
               </p>
-            </mdb-col>
-          </mdb-row>
-          <mdb-row class="mt-3  border-bottom">
-            <mdb-col col="4">
-              <p class="font-weight-bold">Mã tour :</p>
-            </mdb-col>
-            <mdb-col col="7">
-              <p class="font-weight-bold">{{ tour.tourId }}</p>
             </mdb-col>
           </mdb-row>
         </mdb-col>
@@ -280,6 +272,7 @@
             <th>{{ index }}</th>
             <td>{{ product.productName }}</td>
             <td>{{ product.price }}</td>
+            <td>{{ product.quantity }}</td>
           </tr>
         </mdb-tbl-body>
       </mdb-tbl>
@@ -348,6 +341,19 @@ export default {
       this.$store.getters.inCart.map((pd) => {
         this.productCart.push(pd);
       });
+      console.log('san pham');
+      console.log(this.productCart);
+      console.log('thong tin nguoi lon');
+      console.log(this.inforAdults);
+      console.log('thong tin tre em');
+
+      console.log(this.inforChildren);
+      console.log('thong tin em be');
+
+      console.log(this.inforYoung);
+      console.log('thong tin booking ');
+
+      console.log(this.inforBooking);
     },
     payment() {
       this.post = this.user;

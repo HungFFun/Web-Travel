@@ -64,7 +64,7 @@ export default new Vuex.Store({
         (productInCart) => productInCart._id === product._id
       );
       if (productFind !== undefined) {
-        productFind.quantity += 1;
+        productFind.quantity++;
       } else {
         state.inCart.push(product);
       }
