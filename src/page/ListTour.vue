@@ -255,9 +255,9 @@ export default {
       if (this.post.startPlace === 'null') {
         this.post.startPlace = null;
       }
-      if (this.post.endDate === 'null') {
-        this.post.endDate = null;
-      }
+      // if (this.post.endDate === 'null') {
+      //   this.post.endDate = null;
+      // }
       if (this.post.adult === 'null') {
         this.post.adult = null;
       }

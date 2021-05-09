@@ -364,6 +364,9 @@ export default {
           user: this.user,
           productCart: this.productCart,
           inforBooking: this.inforBooking,
+          inforAdults: this.inforAdults,
+          inforChildren: this.inforChildren,
+          inforYoung: this.inforYoung,
         })
         .then((response) => {
           console.log(response);

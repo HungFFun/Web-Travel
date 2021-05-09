@@ -1316,7 +1316,7 @@ export default {
     userLogin() {
       this.post.token = JSON.parse(localStorage.getItem('token'));
       if (this.post.token !== null) {
-        let uri = `${process.env.VUE_APP_PORT}/account/profile`;
+        let uri = `${process.env.VUE_APP_PORT}/account/profileByToken`;
         this.axios.post(uri, this.post).then((response) => {
           this.user = response.data;
         });
