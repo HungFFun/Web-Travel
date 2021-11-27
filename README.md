@@ -1,4 +1,4 @@
-# bandafly_ui
+# pandafly_ui
 
 ## Project setup
 ```
